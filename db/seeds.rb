@@ -55,4 +55,5 @@ p3  = Product.create(
 
 # ASSOCIATIONS
 
-u1.products << p1
+u1.products << p1 << p2
+u2.products << p3
