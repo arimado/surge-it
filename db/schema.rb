@@ -26,12 +26,11 @@ ActiveRecord::Schema.define(version: 20160531101240) do
   create_table "users", force: :cascade do |t|
     t.text     "name"
     t.text     "email"
-    t.text     "password"
-    t.text     "password_confirmation"
+    t.text     "password_digest"
     t.text     "image"
-    t.boolean  "admin",                 default: false
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.boolean  "admin",           default: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
 end
