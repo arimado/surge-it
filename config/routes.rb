@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
+    root 'products#index'
     resources :users, :products
+
+    
 
     # get 'products/new'
     #
