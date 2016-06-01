@@ -25,12 +25,7 @@ var data = [
                    { x: new Date('2011-04-11T21:00:00'), y: 24 },
                    { x: new Date('2011-04-12T13:00:00'), y: 20 }
                ],
-             fillColor: "rgba(151,187,205,0.2)",
-             strokeColor: "rgba(151,187,205,1)",
-             pointColor: "rgba(151,187,205,1)",
-             pointStrokeColor: "#fff",
-             pointHighlightFill: "#fff",
-             pointHighlightStroke: "rgba(151,187,205,1)"
+
             }
 
         ];
@@ -42,7 +37,11 @@ var options = {
     scaleShowLabels: true,
     scaleType: "date",
     scaleLabel: "<%=value%>°C",
-    responsive: true
+    responsive: true,
+    datasetFill : true,
+    fillColor: "rgba(151,187,205,1)",
+    backgroundColor: "rgba(151,187,205,1)",
+    fill: true
 }
 
 var myDateLineChart = new Chart(ctx).Scatter(data, options);
