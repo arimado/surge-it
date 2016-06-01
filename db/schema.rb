@@ -17,23 +17,27 @@ ActiveRecord::Schema.define(version: 20160601050731) do
   enable_extension "plpgsql"
 
   create_table "orders", force: :cascade do |t|
-    t.text    "product_id"
-    t.decimal "price"
-    t.decimal "price_base"
-    t.decimal "price_surge"
-    t.decimal "revenue"
-    t.decimal "revenue_base"
-    t.decimal "revenue_surge"
+    t.text     "product_id"
+    t.decimal  "price"
+    t.decimal  "price_base"
+    t.decimal  "price_surge"
+    t.decimal  "revenue"
+    t.decimal  "revenue_base"
+    t.decimal  "revenue_surge"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "products", force: :cascade do |t|
-    t.text    "name"
-    t.decimal "price"
-    t.decimal "price_base"
-    t.decimal "price_max"
-    t.text    "description"
-    t.text    "image"
-    t.integer "user_id"
+    t.text     "name"
+    t.decimal  "price"
+    t.decimal  "price_base"
+    t.decimal  "price_max"
+    t.text     "description"
+    t.text     "image"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "user_id"
   end
 
   create_table "users", force: :cascade do |t|

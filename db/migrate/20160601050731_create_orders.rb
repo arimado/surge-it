@@ -8,6 +8,7 @@ class CreateOrders < ActiveRecord::Migration
         t.decimal   :revenue
         t.decimal   :revenue_base
         t.decimal   :revenue_surge
+        t.timestamps null: false
     end
   end
 end

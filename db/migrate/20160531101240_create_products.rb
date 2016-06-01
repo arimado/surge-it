@@ -7,6 +7,7 @@ class CreateProducts < ActiveRecord::Migration
         t.decimal   :price_max
         t.text      :description
         t.text      :image
+        t.timestamps null: false
     end
   end
 end

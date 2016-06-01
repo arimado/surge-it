@@ -71,4 +71,19 @@ u2.products << p3
 
 # ***********  ORDERS ***************** #
 
-t
+
+# t.text    "product_id"
+# t.decimal "price"
+# t.decimal "price_base"
+# t.decimal "price_surge"
+# t.decimal "revenue"
+# t.decimal "revenue_base"
+# t.decimal "revenue_surge"
+
+Order.destroy_all
+
+o1 = Order.create(
+    :price => p1.price
+)
+
+p1.orders << o1
