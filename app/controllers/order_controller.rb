@@ -9,5 +9,6 @@ class OrderController < ApplicationController
   end
 
   def create
+      order = Order.create params
   end
 end
