@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
 
-
     root 'products#index'
     resources :users, :products, :orders
     get 'products/api/orders' => 'products#api_orders'
