@@ -1,17 +1,36 @@
+
+# t.text    "name"
+# t.integer "price"
+# t.text    "description"
+# t.text    "image"
+# t.integer "user_id"
+
+
 class ProductsController < ApplicationController
-    def new
-    end
+
 
     def index
+
+    end
+
+    def new
+        @product = Product.new
+        
     end
 
     def create
+        product = Product.new
     end
 
     def edit
     end
 
     def show
-    
+
     end
+
+    private
+        def product_params
+            params.require(:product).permit(:name, :price, :description, :image);
+        end
 end
