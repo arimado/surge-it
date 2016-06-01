@@ -15,11 +15,11 @@ class ProductsController < ApplicationController
 
     def new
         @product = Product.new
-        
+
     end
 
     def create
-        product = Product.new
+        product = Product.new product_params
     end
 
     def edit
