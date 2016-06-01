@@ -1,47 +1,77 @@
 console.log('loaded: script.js');
 
 // var ctx = document.getElementById("myChart").getContext("2d");
-//
-var data = [
-            {
-        	label: 'Temp',
-        	strokeColor: '#A31515',
-        	data: [{ x: new Date('2011-04-11T11:45:00'), y: 25 },
-        		   { x: new Date('2011-04-11T12:51:00'), y: 28 },
-        		   { x: new Date('2011-04-11T14:10:00'), y: 22 },
-                   { x: new Date('2011-04-11T15:15:00'), y: 18 },
-        		   { x: new Date('2011-04-11T17:00:00'), y: 25 },
-        		   { x: new Date('2011-04-11T21:00:00'), y: 24 },
-        		   { x: new Date('2011-04-12T13:00:00'), y: 24 }
-        	      ]
-            },
-            {
-            label: 'Temp',
-            data: [{ x: new Date('2011-04-11T11:45:00'), y: 20 },
-                   { x: new Date('2011-04-11T12:51:00'), y: 21 },
-                   { x: new Date('2011-04-11T14:10:00'), y: 22 },
-                   { x: new Date('2011-04-11T15:15:00'), y: 20 },
-                   { x: new Date('2011-04-11T17:00:00'), y: 25 },
-                   { x: new Date('2011-04-11T21:00:00'), y: 20 },
-                   { x: new Date('2011-04-12T13:00:00'), y: 21 }
-               ],
+$(document).ready(function(){
 
-            }
+    $('#fetch').click(function(e){
+        e.preventDefault();
+        $.ajax({
+              url: '/products/api/orders',
+              dataType: 'json',
+              cache: false,
+              success: function(data) {
+                 console.log('success')
+                 console.log(mapDatesAndPrices(data));
 
-        ];
-//
-// var options = {
-//     bezierCurve: true,
-//     showTooltips: true,
-//     scaleShowHorizontalLines: true,
-//     scaleShowLabels: true,
-//     scaleType: "date",
-//     scaleLabel: "<%=value%>°C",
-//     responsive: true,
-//     datasetFill : true,
-//     fillColor: "rgba(151,187,205,1)",
-//     backgroundColor: "rgba(151,187,205,1)",
-//     fill: true
-// }
-//
-// var myDateLineChart = new Chart(ctx).Scatter(data, options);
+
+              },
+              error: function(xhr, status, err) {
+              }
+        });
+    })
+
+    var mapDatesAndPrices = function (data) {
+        return data.map(function(item) {
+                    result = {};
+                    result.x = new Date(item.my_timestamp);
+                    result.y = parseFloat(item.price);
+                    return result;
+                })
+    };
+
+
+    var data = [
+                {
+            	label: 'Temp',
+            	strokeColor: '#A31515',
+            	data: [{ x: new Date('2011-04-11T11:45:00'), y: 25 },
+            		   { x: new Date('2011-04-11T12:51:00'), y: 28 },
+            		   { x: new Date('2011-04-11T14:10:00'), y: 22 },
+                       { x: new Date('2011-04-11T15:15:00'), y: 18 },
+            		   { x: new Date('2011-04-11T17:00:00'), y: 25 },
+            		   { x: new Date('2011-04-11T21:00:00'), y: 24 },
+            		   { x: new Date('2011-04-12T13:00:00'), y: 24 }
+            	      ]
+                },
+                {
+                label: 'Temp',
+                data: [{ x: new Date('2011-04-11T11:45:00'), y: 20 },
+                       { x: new Date('2011-04-11T12:51:00'), y: 21 },
+                       { x: new Date('2011-04-11T14:10:00'), y: 22 },
+                       { x: new Date('2011-04-11T15:15:00'), y: 20 },
+                       { x: new Date('2011-04-11T17:00:00'), y: 25 },
+                       { x: new Date('2011-04-11T21:00:00'), y: 20 },
+                       { x: new Date('2011-04-12T13:00:00'), y: 21 }
+                   ],
+
+                }
+
+            ];
+    //
+    // var options = {
+    //     bezierCurve: true,
+    //     showTooltips: true,
+    //     scaleShowHorizontalLines: true,
+    //     scaleShowLabels: true,
+    //     scaleType: "date",
+    //     scaleLabel: "<%=value%>°C",
+    //     responsive: true,
+    //     datasetFill : true,
+    //     fillColor: "rgba(151,187,205,1)",
+    //     backgroundColor: "rgba(151,187,205,1)",
+    //     fill: true
+    // }
+    //
+    // var myDateLineChart = new Chart(ctx).Scatter(data, options);
+
+})
