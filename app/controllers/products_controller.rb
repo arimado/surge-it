@@ -1,15 +1,15 @@
 
-# t.text    "name"
-# t.integer "price"
-# t.text    "description"
-# t.text    "image"
-# t.integer "user_id"
 
 
 class ProductsController < ApplicationController
 
 
+
     def index
+        @order = Order.all
+
+        # Just get all order data
+        # parse created_at stuff into things that charts can read
 
     end
 
@@ -26,7 +26,10 @@ class ProductsController < ApplicationController
     end
 
     def show
+    end
 
+    def api_orders
+        render json: Order.all
     end
 
     private
