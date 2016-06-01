@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20160601050731) do
     t.decimal  "revenue"
     t.decimal  "revenue_base"
     t.decimal  "revenue_surge"
+    t.text     "my_timestamp"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end

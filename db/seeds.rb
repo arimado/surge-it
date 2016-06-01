@@ -88,7 +88,7 @@ o17 = Order.create( :price => 120.00,
                   :revenue => 120.00,
                   :revenue_base => 100.00,
                   :revenue_surge => 20.00,
-                  :created_at => '2016-6-1 07:00:00'
+                  :my_timestamp => '2016-6-1 07:00:00'
                  )
 o1 = Order.create( :price => 123.00,
                   :price_base => 100.00,
@@ -96,7 +96,7 @@ o1 = Order.create( :price => 123.00,
                   :revenue => 243.00,
                   :revenue_base => 200.00,
                   :revenue_surge => 43.00,
-                  :created_at => '2016-6-1 07:00:00'
+                  :my_timestamp => '2016-6-1 07:00:00'
                   )
 o2 = Order.create(:price => 126.00,
                   :price_base => 100.00,
@@ -104,7 +104,7 @@ o2 = Order.create(:price => 126.00,
                   :revenue => 369.00,
                   :revenue_base => 300.00,
                   :revenue_surge => 69.00,
-                  :created_at => '2016-6-1 07:00:00'
+                  :my_timestamp => '2016-6-1 07:00:00'
                  )
 o3 = Order.create( :price => 129.00,
                   :price_base => 100.00,
@@ -112,7 +112,7 @@ o3 = Order.create( :price => 129.00,
                   :revenue => 498.00,
                   :revenue_base => 400.00,
                   :revenue_surge => 98.00,
-                  :created_at => '2016-6-1 07:30:00'
+                  :my_timestamp => '2016-6-1 07:30:00'
                  )
 o4 = Order.create( :price => 132.00,
                   :price_base => 100.00,
@@ -120,7 +120,7 @@ o4 = Order.create( :price => 132.00,
                   :revenue => 630.00,
                   :revenue_base => 500.00,
                   :revenue_surge => 130.00,
-                  :created_at => '2016-6-1 07:30:00'
+                  :my_timestamp => '2016-6-1 07:30:00'
               )
 o5 = Order.create( :price => 135.00,
                   :price_base => 100.00,
@@ -128,7 +128,7 @@ o5 = Order.create( :price => 135.00,
                   :revenue => 765.00,
                   :revenue_base => 600.00,
                   :revenue_surge => 165.00,
-                  :created_at => '2016-6-1 12:00:00'
+                  :my_timestamp => '2016-6-1 12:00:00'
               )
 o6 = Order.create( :price => 138.00,
                   :price_base => 100.00,
@@ -136,7 +136,7 @@ o6 = Order.create( :price => 138.00,
                   :revenue => 903.00,
                   :revenue_base => 700.00,
                   :revenue_surge => 203.00,
-                  :created_at => '2016-6-1 13:00:00'
+                  :my_timestamp => '2016-6-1 13:00:00'
               )
 o7 = Order.create( :price => 141.00,
                   :price_base => 100.00,
@@ -144,7 +144,7 @@ o7 = Order.create( :price => 141.00,
                   :revenue => 1044.00,
                   :revenue_base => 800.00,
                   :revenue_surge => 244.00,
-                  :created_at => '2016-6-1 14:00:00'
+                  :my_timestamp => '2016-6-1 14:00:00'
               )
 o8 = Order.create( :price => 144.00,
                   :price_base => 100.00,
@@ -152,7 +152,7 @@ o8 = Order.create( :price => 144.00,
                   :revenue => 1188.00,
                   :revenue_base => 900.00,
                   :revenue_surge => 288.00,
-                  :created_at => '2016-6-1 15:00:00'
+                  :my_timestamp => '2016-6-1 15:00:00'
               )
 o9 = Order.create( :price => 147.00,
                   :price_base => 100.00,
@@ -160,7 +160,7 @@ o9 = Order.create( :price => 147.00,
                   :revenue => 1335.00,
                   :revenue_base => 1000.00,
                   :revenue_surge => 335.00,
-                  :created_at => '2016-6-1 17:00:00'
+                  :my_timestamp => '2016-6-1 17:00:00'
               )
 o10 = Order.create( :price => 150.00,
                   :price_base => 100.00,
@@ -168,7 +168,7 @@ o10 = Order.create( :price => 150.00,
                   :revenue => 1485.00,
                   :revenue_base => 1100.00,
                   :revenue_surge => 385.00,
-                  :created_at => '2016-6-1 17:10:00'
+                  :my_timestamp => '2016-6-1 17:10:00'
               )
 o11 = Order.create( :price => 153.00,
                   :price_base => 100.00,
@@ -176,7 +176,7 @@ o11 = Order.create( :price => 153.00,
                   :revenue => 1638.00,
                   :revenue_base => 1200.00,
                   :revenue_surge => 438.00,
-                  :created_at => '2016-6-1 17:00:00'
+                  :my_timestamp => '2016-6-1 17:00:00'
               )
 o12 = Order.create( :price => 156.00,
                   :price_base => 100.00,
@@ -184,7 +184,7 @@ o12 = Order.create( :price => 156.00,
                   :revenue => 1794.00,
                   :revenue_base => 1300.00,
                   :revenue_surge => 494.00,
-                  :created_at => '2016-6-1 23:10:00'
+                  :my_timestamp => '2016-6-1 23:10:00'
               )
 o13 = Order.create( :price => 159.00,
                   :price_base => 100.00,
@@ -192,7 +192,7 @@ o13 = Order.create( :price => 159.00,
                   :revenue => 1953.00,
                   :revenue_base => 1400.00,
                   :revenue_surge => 553.00,
-                  :created_at => '2016-6-1 23:20:00'
+                  :my_timestamp => '2016-6-1 23:20:00'
               )
 o14 = Order.create( :price => 162.00,
                   :price_base => 100.00,
@@ -200,7 +200,7 @@ o14 = Order.create( :price => 162.00,
                   :revenue => 2115.00,
                   :revenue_base => 1500.00,
                   :revenue_surge => 615.00,
-                  :created_at => '2016-6-1 23:30:00'
+                  :my_timestamp => '2016-6-1 23:30:00'
               )
 o15 = Order.create( :price => 165.00,
                   :price_base => 100.00,
@@ -208,7 +208,7 @@ o15 = Order.create( :price => 165.00,
                   :revenue => 2280.00,
                   :revenue_base => 1600.00,
                   :revenue_surge => 680.00,
-                  :created_at => '2016-6-1 23:40:00'
+                  :my_timestamp => '2016-6-1 23:40:00'
               )
 o16 = Order.create( :price => 168.00,
                   :price_base => 100.00,
@@ -216,7 +216,7 @@ o16 = Order.create( :price => 168.00,
                   :revenue => 2448.00,
                   :revenue_base => 1700.00,
                   :revenue_surge => 748.00,
-                  :created_at => '2016-6-1 23:50:00'
+                  :my_timestamp => '2016-6-1 23:50:00'
               )
 
 p1.orders << o1
