@@ -33,7 +33,6 @@ $(document).ready(function(){
      var myDateLineChart = new Chart(ctx).Scatter(chartData, options);
 
 
-
     $('#fetch').click(function(e){
         e.preventDefault();
         $.ajax({
@@ -44,6 +43,9 @@ $(document).ready(function(){
                  console.log('success')
                  console.log();
                 //  myDateLineChart.datasets[1] = data;
+
+                console.log(mapDatesAndPrices(data));
+
                  mapDatesAndPrices(data)
                     .forEach(function(price) {
                          myDateLineChart.datasets[0].addPoint(price.x, price.y);
@@ -60,7 +62,7 @@ $(document).ready(function(){
     var mapDatesAndPrices = function (data) {
         return data.map(function(item) {
                     result = {};
-                    result.x = new Date(item.my_timestamp);
+                    result.x = new Date(item.created_at);
                     result.y = parseFloat(item.price);
                     return result;
                 })

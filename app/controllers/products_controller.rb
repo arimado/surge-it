@@ -26,6 +26,8 @@ class ProductsController < ApplicationController
     end
 
     def show
+        @product = Product.find(params[:id])
+        @order = Order.new
     end
 
     def api_orders
