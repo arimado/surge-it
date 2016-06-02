@@ -2,6 +2,7 @@
 <p>Find me in app/views/products/new.html.erb</p>
 
 <ul>
+  <li><strong>product ID:</strong> <%= @product.id %></li>
   <li><strong>Current price:</strong> <%= @product.price %></li>
   <li><strong>Base price:</strong> <%= @product.price_base %></li>
   <li><strong>Max price:</strong> <%= @product.price_max %></li>
@@ -13,9 +14,10 @@
 </ul>
 <hr>
 
-<button id="order">
-    ADD ORDER
-</button>
 
+<%= form_tag(controller: "orders", action: "create", method: "post", class: "buy") do %>
+  <%= hidden_field_tag(:product_id, @product.id) %>
+  <%= submit_tag("ADD ORDER") %>
+<% end %>
 
 <%= javascript_include_tag "product-view" %>
