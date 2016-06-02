@@ -7,10 +7,15 @@ $(document).ready(function(){
 
      var chartData = [
                  {
-             	label: 'Temp',
-             	strokeColor: '#A31515',
-             	data: []
-                 }
+                 	label: 'Temp',
+                 	strokeColor: '#A31515',
+                 	data: []
+                },
+                {
+                    label: 'Revenue',
+                   strokeColor: '#A31515',
+                   data: []
+                }
              ];
 
      var options = {
@@ -41,11 +46,15 @@ $(document).ready(function(){
                  console.log();
                 //  myDateLineChart.datasets[1] = data;
 
-                console.log(mapDatesAndPrices(data));
+                console.log(mapDatesAndPrices(data, 'price'));
 
-                 mapDatesAndPrices(data)
+                 mapDatesAndPrices(data, 'price')
                     .forEach(function(price) {
                          myDateLineChart.datasets[0].addPoint(price.x, price.y);
+                     })
+                 mapDatesAndPrices(data, 'revenue')
+                    .forEach(function(price) {
+                         myDateLineChart.datasets[1].addPoint(price.x, price.y);
                      })
 
                  myDateLineChart.update();
@@ -56,14 +65,16 @@ $(document).ready(function(){
         });
     })
 
-    var mapDatesAndPrices = function (data) {
+    var mapDatesAndPrices = function (data, value) {
         return data.map(function(item) {
                     result = {};
                     result.x = new Date(item.created_at);
-                    result.y = parseFloat(item.price);
+                    result.y = parseFloat(item[value]);
                     return result;
                 })
     };
+
+
 
 
 
