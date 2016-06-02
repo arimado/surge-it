@@ -6,28 +6,54 @@
     </div>
     <div class="topDashContainer">
         <div class="left surgePriceContainer">
-            <div class="bigNum"><%= @product.price - @product.price_base %></div>
-            <div class="bigNumLabel">Surge Boost</div>
-            <div class="smallNum"><span class="smallNumLabel">Real Price</span> <%= @product.price_base %> </div>
-            <div class="smallNum"><span class="smallNumLabel">Total Price</span> <%= @product.price_base %> </div>
+            <div class="topDashInner">
+                <div class="bigNumLabel">Current Surge Boost</div>
+                <div class="bigNum"><%= @product.price - @product.price_base %></div>
+                <div class="smallNums">
+                    <div class="smallPair">
+                        <div class="smallNumLabel">Real Price</div>
+                        <div class="smallNum"> <%= @product.price_base %> </div>
+                    </div>
+                    <div class="smallPair">
+                        <div class="smallNumLabel">Total Price</div>
+                        <div class="smallNum"> <%= @product.price_base %></div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="center todayPriceContainer">
-            <div class="bigNum"> $7200.00 </div>
-            <div class="bigNumLabel">Today</div>
-            <div class="smallNum"><span class="smallNumLabel">Total orders</span> 11 </div>
+            <div class="topDashInner">
+                <div class="bigNumLabel">Today</div>
+                <div class="bigNum"> $7200.00 </div>
+                <div class="smallNums">
+                    <div class="smallPair">
+                        <div class="smallNumLabel">Total orders</div>
+                        <div class="smallNum"> 11 </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="right yesterdayPriceContainer">
-            <div class="bigNum"> $7200.00 </div>
-            <div class="bigNumLabel">Yesterday</div>
-            <div class="smallNum"><span class="smallNumLabel">Total orders</span> 11 </div>
+            <div class="topDashInner">
+                <div class="bigNumLabel">Yesterday</div>
+                <div class="bigNum"> $7200.00 </div>
+                <div class="smallNums">
+                    <div class="smallPair">
+                        <div class="smallNumLabel">Total orders</div>
+                        <div class="smallNum"> 11 </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="chartsContainer">
-    <div class="chartsTabs">
-        <button id="fetch">GET THAT SWEET JSON</button>
-    </div>
-        <div class="chart">
-            <canvas id="productChart" width="400" height="200"></canvas>
+        <div class="chartsTabs">
+            <button id="fetch">GET THAT SWEET JSON</button>
+        </div>
+        <div class="chartWrapper">
+            <div class="chart">
+                <canvas id="productChart" width="400" height="200"></canvas>
+            </div>
         </div>
     </div>
 </div>
