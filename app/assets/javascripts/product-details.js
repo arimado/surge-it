@@ -3,7 +3,13 @@ console.log('loaded: script.js');
 
 $(document).ready(function(){
 
-    var ctx = document.getElementById("productChart").getContext("2d");
+
+
+
+
+    // CHART.JS AND SCATTER JS STUFF
+
+     var ctx = document.getElementById("productChart").getContext("2d");
 
      var chartData = [
                         {
@@ -44,6 +50,26 @@ $(document).ready(function(){
 
      var myDateLineChart = new Chart(ctx).Scatter(chartData, options);
 
+     var mapDatesAndPrices = function (data, value) {
+         return data.map(function(item) {
+                     result = {};
+                     result.x = new Date(item.created_at);
+                     result.y = parseFloat(item[value]);
+                     return result;
+                 })
+     };
+
+     var setDataOnChart = function(data) {
+         var args = Array.prototype.slice.call(arguments);
+         var dataPoints = args.slice(1, args.length);
+         dataPoints.forEach(function(dataPoint, index) {
+             mapDatesAndPrices(data, dataPoint).forEach(function(price){
+                 myDateLineChart.datasets[index].addPoint(price.x, price.y);
+             })
+         });
+     }
+
+    //  EVENTS
 
     $('#fetch').click(function(e){
         e.preventDefault();
@@ -54,46 +80,30 @@ $(document).ready(function(){
               success: function(data) {
                  console.log('success')
                  console.log();
-                //  myDateLineChart.datasets[1] = data;
-
-                console.log(mapDatesAndPrices(data, 'price'));
-
-                 mapDatesAndPrices(data, 'price')
-                    .forEach(function(price) {
-                         myDateLineChart.datasets[0].addPoint(price.x, price.y);
-                     })
-                 mapDatesAndPrices(data, 'revenue')
-                    .forEach(function(price) {
-                         myDateLineChart.datasets[1].addPoint(price.x, price.y);
-                     })
-                 mapDatesAndPrices(data, 'revenue_surge')
-                    .forEach(function(price) {
-                         myDateLineChart.datasets[2].addPoint(price.x, price.y);
-                     })
-                     mapDatesAndPrices(data, 'revenue_base')
-                        .forEach(function(price) {
-                             myDateLineChart.datasets[3].addPoint(price.x, price.y);
-                         })
-
+                 setDataOnChart(data, 'price', 'revenue', 'revenue_base', 'revenue_surge');
                  myDateLineChart.update();
-
               },
               error: function(xhr, status, err) {
               }
         });
     })
 
-    var mapDatesAndPrices = function (data, value) {
-        return data.map(function(item) {
-                    result = {};
-                    result.x = new Date(item.created_at);
-                    result.y = parseFloat(item[value]);
-                    return result;
-                })
-    };
+    // LISTENER
 
-
-
-
+    (function poll() {
+        setTimeout(function() {
+            $.ajax({
+                  url: '/products/api/orders',
+                  dataType: 'json',
+                  cache: false,
+                  success: function(data) {
+                      // do stuff here
+                      poll();
+                  },
+                  error: function(xhr, status, err) {
+                  }
+            });
+        });
+    })();
 
 })
