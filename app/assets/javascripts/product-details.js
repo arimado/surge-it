@@ -66,17 +66,16 @@ $(document).ready(function(){
 
     var myDateLineChart
 
-     var ctx = document.getElementById("productChart").getContext("2d");
-     myDateLineChart = new Chart(ctx).Scatter(chartData, options);
+    var ctx = document.getElementById("productChart").getContext("2d");
+    myDateLineChart = new Chart(ctx).Scatter(chartData, options);
 
     //  EVENTS
-
     var currentProductId = $('#currentProduct').val();
-    
+
     $('#fetch').click(function(e){
         e.preventDefault();
         $.ajax({
-              url: '/products/api/orders',
+              url: '/api/products/' + currentProductId + '/orders',
               dataType: 'json',
               cache: false,
               success: function(data) {
@@ -91,7 +90,6 @@ $(document).ready(function(){
     })
 
     // LISTENER
-
 
 });
 

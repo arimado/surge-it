@@ -30,10 +30,6 @@ class ProductsController < ApplicationController
         @order = Order.new
     end
 
-    def api_orders
-        render json: Order.all
-    end
-
     private
         def product_params
             params.require(:product).permit(:name, :price, :description, :image);

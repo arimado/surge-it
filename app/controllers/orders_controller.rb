@@ -59,6 +59,13 @@ class OrdersController < ApplicationController
   def show
   end
 
+
+
+  def api_orders
+      params[:id]
+      render json: Order.where(:product_id => params[:id])
+  end
+
   private
 
 end

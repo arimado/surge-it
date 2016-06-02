@@ -45,7 +45,8 @@ p1  = Product.create(
     :price_max => 200,
     :revenue => 100,
     :revenue_base => 80,
-    :revenue_surge => 20
+    :revenue_surge => 20,
+    :trend => 1
 )
 
 p2  = Product.create(
@@ -57,7 +58,8 @@ p2  = Product.create(
     :price_max => 200,
     :revenue => 100,
     :revenue_base => 80,
-    :revenue_surge => 20
+    :revenue_surge => 20,
+    :trend => 1
 )
 
 p3  = Product.create(
@@ -69,7 +71,8 @@ p3  = Product.create(
     :price_max => 25000.00,
     :revenue => 100,
     :revenue_base => 80,
-    :revenue_surge => 20
+    :revenue_surge => 20,
+    :trend => 1
 )
 
 
