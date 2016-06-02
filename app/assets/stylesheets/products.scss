@@ -68,7 +68,7 @@ body, html {
 
 // PRODUCTS START HERE
 
-.productDetailsContainer {
+.viewContainer {
     background: #ECF5FF;
     -webkit-box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
     -moz-box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
@@ -78,10 +78,10 @@ body, html {
 
 }
 
-.productDetailsContainer .header {
+.viewContainer .header {
 }
 
-.productDetailsContainer .header .headerTitle {
+.viewContainer .header .headerTitle {
     text-align: center;
     padding: 40px;
     font-weight: 800;
@@ -96,11 +96,11 @@ box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
 }
 
 
-.productDetailsContainer .topDashContainer {
+.viewContainer .topDashContainer {
     display: flex;
 }
 
-.productDetailsContainer .topDashContainer > div {
+.viewContainer .topDashContainer > div {
     flex-grow: 1;
     width: 100%;
     height: 280px;;
@@ -110,7 +110,7 @@ box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
 
 }
 
-.productDetailsContainer .topDashContainer > div .topDashInner {
+.viewContainer .topDashContainer > div .topDashInner {
     background: #3289F1;
     color: white;
     padding: 20px;
@@ -120,7 +120,7 @@ box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
     box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
 }
 
-.productDetailsContainer .topDashContainer > div .bigNum {
+.viewContainer .topDashContainer > div .bigNum {
     padding: 30px 0px 30px 0px;
     border-bottom: 1px solid white;
     font-size: 60px;
@@ -129,41 +129,41 @@ box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
     margin-bottom: 15px;
 }
 
-.productDetailsContainer .topDashContainer > div .bigNumLabel {
+.viewContainer .topDashContainer > div .bigNumLabel {
     font-size: 12px;
 }
 
-.productDetailsContainer .topDashContainer > div .smallNums {
+.viewContainer .topDashContainer > div .smallNums {
     display: flex;
 }
 
-.productDetailsContainer .topDashContainer > div .smallNums .smallPair {
+.viewContainer .topDashContainer > div .smallNums .smallPair {
     flex-grow: 1;
 }
 
-.productDetailsContainer .topDashContainer > div .smallNum {
+.viewContainer .topDashContainer > div .smallNum {
     text-align: center;
 }
 
-.productDetailsContainer .topDashContainer > div .smallNumLabel {
+.viewContainer .topDashContainer > div .smallNumLabel {
     font-size: 12px;
 }
 
-.productDetailsContainer .topDashContainer .left .smallPair {
+.viewContainer .topDashContainer .left .smallPair {
     padding: 0 10px 0 0;
 }
 
 
-.productDetailsContainer .topDashContainer .left .smallNum {
+.viewContainer .topDashContainer .left .smallNum {
     padding: 10px 0 0 0;
     text-align: right;
 }
 
-.productDetailsContainer .topDashContainer .center {
+.viewContainer .topDashContainer .center {
 
 }
 
-.productDetailsContainer .topDashContainer .right {
+.viewContainer .topDashContainer .right {
 
 }
 

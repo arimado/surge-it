@@ -1,30 +1,46 @@
-<h1>Products#show</h1>
-<p>Find me in app/views/products/new.html.erb</p>
-
 <input id="currentProduct" type="hidden" value="<%= @product.id %>" />
 
-<ul>
-  <li><strong>product ID:</strong> <%= @product.id %></li>
-  <li id="currentPrice"><strong>Current price:</strong> <%= @product.price %></li>
-  <li><strong>Surge amount: </strong>  <%= @product.price - @product.price_base %> </li>
-  <li><strong>Base price:</strong> <%= @product.price_base %></li>
-  <li><strong>Max price:</strong> <%= @product.price_max %></li>
-  <li><strong>Total revenue:</strong> <%= @product.revenue %></li>
-  <li><strong>Base revenue:</strong> <%= @product.revenue_base %></li>
-  <li><strong>Surge revenue:</strong> <%= @product.revenue_surge %></li>
-  <li><strong>Max price:</strong> <%= @product.price_max %></li>
-  <li><strong>Description:</strong> <%= @product.description %></li>
-  <li><strong>Image:</strong> <%= @product.image %></li>
-  <li><strong>Created at:</strong> <%= @product.created_at %></li>
-  <li><strong>Updated at:</strong> <%= @product.updated_at %></li>
-  <li><strong>user_id this product belongs to:</strong> <%= @product.user_id %></li>
-</ul>
+
+
+<div class="viewContainer">
+    <div class="header">
+        <div class="headerTitle">
+            <%= @product.name %>
+        </div>
+    </div>
+    <div class="featureProductContainer">
+        <%= form_tag(controller: "orders", action: "create", method: "post", class: "buy") do %>
+          <%= hidden_field_tag(:product_id, @product.id) %>
+          <%= label_tag( @product.price ) %>
+          <%= submit_tag("ADD ORDER") %>
+        <% end %>
+    </div>
+    <div class="productContentContainer">
+    </div>
+    <div class="relatedProductsContainer">
+        <ul>
+            <li>thing</li>
+            <li>thing</li>
+            <li>thing</li>
+        </ul>
+    </div>
+</div>
+
+
+
+
+
+
+
+<input id="currentProduct" type="hidden" value="<%= params[:id] %>" />
+
+
+
+<%= javascript_include_tag "product-details" %>
+
 <hr>
 
 
-<%= form_tag(controller: "orders", action: "create", method: "post", class: "buy") do %>
-  <%= hidden_field_tag(:product_id, @product.id) %>
-  <%= submit_tag("ADD ORDER") %>
-<% end %>
+
 
 <%= javascript_include_tag "product-view" %>
