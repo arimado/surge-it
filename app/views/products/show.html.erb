@@ -4,6 +4,7 @@
 <ul>
   <li><strong>product ID:</strong> <%= @product.id %></li>
   <li><strong>Current price:</strong> <%= @product.price %></li>
+  <li><strong>Surge amount: </strong>  <%= @product.price - @product.price_base %> </li>
   <li><strong>Base price:</strong> <%= @product.price_base %></li>
   <li><strong>Max price:</strong> <%= @product.price_max %></li>
   <li><strong>Total revenue:</strong> <%= @product.revenue %></li>
