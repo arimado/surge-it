@@ -42,7 +42,10 @@ p1  = Product.create(
     :image => 'http://lovelace-media.imgix.net/uploads/259/da8e6e30-0a0e-0132-07c7-0eae5eefacd9.jpg?w=700&fit=max&auto=format&q=70',
     :price => 115.25,
     :price_base => 80,
-    :price_max => 200
+    :price_max => 200,
+    :revenue => 100,
+    :revenue_base => 80,
+    :revenue_surge => 20
 )
 
 p2  = Product.create(
@@ -51,7 +54,10 @@ p2  = Product.create(
     :image => 'http://lovelace-media.imgix.net/uploads/259/da8e6e30-0a0e-0132-07c7-0eae5eefacd9.jpg?w=700&fit=max&auto=format&q=70',
     :price => 115.25,
     :price_base => 80,
-    :price_max => 200
+    :price_max => 200,
+    :revenue => 100,
+    :revenue_base => 80,
+    :revenue_surge => 20
 )
 
 p3  = Product.create(
@@ -60,7 +66,10 @@ p3  = Product.create(
     :image => 'http://lovelace-media.imgix.net/uploads/259/da8e6e30-0a0e-0132-07c7-0eae5eefacd9.jpg?w=700&fit=max&auto=format&q=70',
     :price => 21000.00,
     :price_base => 19999.95,
-    :price_max => 25000.00
+    :price_max => 25000.00,
+    :revenue => 100,
+    :revenue_base => 80,
+    :revenue_surge => 20
 )
 
 
