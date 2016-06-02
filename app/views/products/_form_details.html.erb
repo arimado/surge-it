@@ -1,0 +1,31 @@
+<%= form_for @order do |f| %>
+    <p>
+        <%= f.label :product_id %>
+        <%= f.number_field :product_id, :required => true  %>
+    </p>
+    <p>
+        <%= f.label :price %>
+        <%= f.number_field :price, :required => true %>
+    </p>
+    <p>
+        <%= f.label :price_base %>
+        <%= f.number_field :price_base, :required => true %>
+    </p>
+    <p>
+        <%= f.label :price_surge %>
+        <%= f.number_field :price_surge, :required => true %>
+    </p>
+    <p>
+        <%= f.label :revenue %>
+        <%= f.number_field :revenue, :required => true %>
+    </p>
+    <p>
+        <%= f.label :revenue_base %>
+        <%= f.number_field :revenue_base, :required => true %>
+    </p>
+    <p>
+        <%= f.label :revenue_surge %>
+        <%= f.number_field :revenue_surge, :required => true %>
+    </p>
+    <%= f.submit %>
+<% end %>
