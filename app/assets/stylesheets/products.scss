@@ -2,7 +2,56 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
 // NOT FROM PRODUCS. REMEMBER TO MOVE
+
+body {
+    background: #DEECFF;
+}
 
 body, html {
     height: 100%;
@@ -14,18 +63,22 @@ body, html {
     max-width: 1100px;
     padding: 0 40px;
     margin: auto;
-    border: 2px solid green;
     height: 100%;
 }
 
 // PRODUCTS START HERE
 
 .productDetailsContainer {
-    border: 1px solid blue;
+    background: #ECF5FF;
+    -webkit-box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
+    -moz-box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
+    box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
+    padding-top: 1px;
+    margin-top: 20px;
+
 }
 
 .productDetailsContainer .header {
-    border: 1px solid yellow;
 }
 
 .productDetailsContainer .header .headerTitle {
@@ -33,10 +86,15 @@ body, html {
     padding: 40px;
     font-weight: 800;
     font-size: 3em;
-    background: #DBF2FF;
+    background: white;
     margin: 20px 20px 0px 20px;
     color: #3289F1;
+    -webkit-box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
+-moz-box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
+box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
+
 }
+
 
 .productDetailsContainer .topDashContainer {
     display: flex;
@@ -44,7 +102,6 @@ body, html {
 
 .productDetailsContainer .topDashContainer > div {
     flex-grow: 1;
-    border: 1px solid blue;
     width: 100%;
     height: 280px;;
     padding: 20px;
@@ -58,6 +115,9 @@ body, html {
     color: white;
     padding: 20px;
     flex-grow: 1;
+    -webkit-box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
+    -moz-box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
+    box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
 }
 
 .productDetailsContainer .topDashContainer > div .bigNum {
@@ -112,17 +172,46 @@ body, html {
 }
 
 .chartsContainer .chartsTabs {
-    border: 1px solid red;
     padding: 0 20px 0 20px;
+}
+
+.chartsContainer .chartsTabs li {
+    display: inline-block;
+    -webkit-box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
+    -moz-box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
+    box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
+
+}
+
+.chartsContainer .chartsTabs li label {
+    padding: 5px;
+    display: block;
+    background: #DBF2FF;
+    color: #3289F1;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+.chartsContainer .chartsTabs li label:hover {
+    cursor: pointer;
 }
 
 .chartsContainer .chartWrapper {
     padding: 20px;
 }
 
+.chartsContainer .chartWrapper .chartInner {
+    background: white;
+    padding: 30px;
+    -webkit-box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
+    -moz-box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
+    box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
+}
+
 
 .chartsContainer .chart {
-    background: #AAC9E8; 
+
 }
 
 .chartsContainer .chart #productChart {

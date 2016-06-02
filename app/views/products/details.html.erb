@@ -48,11 +48,16 @@
     </div>
     <div class="chartsContainer">
         <div class="chartsTabs">
-            <button id="fetch">GET THAT SWEET JSON</button>
+            <ul>
+                <li><label>Price <input type="checkbox" name="price"></label></li>
+                <li><label>Revenue <input type="checkbox" name="revenue"></label></li>
+            </ul>
         </div>
         <div class="chartWrapper">
-            <div class="chart">
-                <canvas id="productChart" width="400" height="200"></canvas>
+            <div class="chartInner">
+                <div class="chart">
+                    <canvas id="productChart" width="400" height="200"></canvas>
+                </div>
             </div>
         </div>
     </div>
