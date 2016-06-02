@@ -5,9 +5,6 @@ $(document).ready(function(){
 
     var ctx = document.getElementById("productChart").getContext("2d");
 
-
-
-
      var chartData = [
                  {
              	label: 'Temp',
@@ -22,7 +19,7 @@ $(document).ready(function(){
          scaleShowHorizontalLines: true,
          scaleShowLabels: true,
          scaleType: "date",
-         scaleLabel: "<%=value%>°C",
+         scaleLabel: "$<%=value%>",
          responsive: true,
          datasetFill : true,
          fillColor: "rgba(151,187,205,1)",
