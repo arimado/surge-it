@@ -17,15 +17,25 @@ class OrdersController < ApplicationController
   # t.datetime "updated_at",    null: false
 
   def create
-     product_id = params[:product_id]
-     product = Product.find(product_id)
-     product.update :price => product.price + 10
 
-    # => ADD TO ORDERS DB
-    # => UPDATE current product
-    # =>    increment by 10
+    product_id = params[:product_id]
+    product = Product.find(product_id)
 
-     binding.pry
+    product_price_old = product.price
+    product_price_new = product.price + 10
+
+    order = Order.create(
+        :product_id => product_id,
+        :price => product_price_old,
+        :price_base => product.price_base,
+        :price_surge => product_price_old - product.price_base
+    )
+
+    product.update(
+        :price => product_price_new
+    )
+
+    binding.pry
   end
 
   def show
