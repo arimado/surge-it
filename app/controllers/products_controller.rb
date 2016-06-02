@@ -20,7 +20,7 @@ class ProductsController < ApplicationController
     end
 
     def edit
-        
+
     end
 
     def show
@@ -30,6 +30,10 @@ class ProductsController < ApplicationController
 
     def details
         @product = Product.find(params[:id]);
+    end
+
+    def api_product
+        render json: Product.find(params[:id])
     end
 
     private

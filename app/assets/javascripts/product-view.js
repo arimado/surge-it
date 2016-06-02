@@ -1,21 +1,25 @@
 console.log('loaded product-view.js');
 
+// JUST A POLLING THING THAT GETS ME THE PRODUCTS CURRENT PRICE
 
+var currentProductId = $('#currentProduct').val();
 
-$('#order').click(function(e){
+var getOrdersAPIstring = '/api/products/' + currentProductId
 
-    var data = [{data: 'Hello server!'}];
+function poll() {
+    setTimeout(function() {
+        $.ajax({
+              url: getOrdersAPIstring,
+              dataType: 'json',
+              cache: false,
+              success: function(data) {
+                  $('#currentPrice').html('<strong> AJAX Current Price: </strong> ' + data.price);
+                  poll();
+              },
+              error: function(xhr, status, err) {
+              }
+        });
+    }, 1000);
+};
 
-    $.ajax({
-          url: '/products/api/orders',
-          dataType: 'json',
-          method: 'POST',
-          data: data,
-          cache: false,
-          success: function(response) {
-             console.log(response);
-          },
-          error: function(xhr, status, err) {
-          }
-    });
-})
+poll();

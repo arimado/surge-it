@@ -79,10 +79,6 @@ $(document).ready(function(){
         });
     }
 
-    var setCurrentState = function(currentState, newState) {
-
-    }
-
     var findNewData = function(currentState, newState) {
         var newValues = [];
         if (newState.length > currentState.length) {
