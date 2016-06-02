@@ -1,10 +1,9 @@
-<h1>Products#details</h1>
+<h1>Product details: <%= @product.name %></h1>
 <p>Find me in app/views/products/details.html.erb</p>
 
-<input id="currentProduct" type="hidden" value="<%= params[:id] %>" /> 
+<input id="currentProduct" type="hidden" value="<%= params[:id] %>" />
 
 <button id="fetch">GET THAT SWEET JSON</button>
-<canvas id="productChart" width="400" height="200"></canvas>
-
+<canvas id="productChart" width="400" height="200"></canvas> 
 
 <%= javascript_include_tag "product-details" %>

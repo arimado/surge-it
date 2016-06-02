@@ -1,6 +1,3 @@
-
-
-
 class ProductsController < ApplicationController
 
 
@@ -23,11 +20,16 @@ class ProductsController < ApplicationController
     end
 
     def edit
+        
     end
 
     def show
         @product = Product.find(params[:id])
         @order = Order.new
+    end
+
+    def details
+        @product = Product.find(params[:id]);
     end
 
     private
