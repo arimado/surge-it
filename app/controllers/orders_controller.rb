@@ -6,14 +6,13 @@ class OrdersController < ApplicationController
   end
 
   def create
-     params
+     params[:product_id]
+     binding.pry
   end
 
   def show
   end
 
   private
-      def order_params
-        params.require(:order).permit(:product_id, :price, :price_base, :price_surge, :revenue, :revenue_base, :revenue_surge)
-      end
+
 end
