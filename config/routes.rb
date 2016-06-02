@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     root 'products#index'
     resources :users, :products, :orders
     get 'products/api/orders' => 'products#api_orders'
+    get 'products/:id/details' => 'products#details'
 
     # post 'orders' => 'products#api_orders', :as => 'orders_path_url'
 
