@@ -35,7 +35,7 @@ class OrdersController < ApplicationController
         :price => product_price_new
     )
 
-    binding.pry
+    redirect_to "/products/#{product_id}"
   end
 
   def show
