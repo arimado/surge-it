@@ -10,7 +10,9 @@
     </div>
     <div class="featureProductContainer">
         <div class="imageContainer">
-            <img src="<%= @product.image %>" alt="">
+            <div class="imageContainerInner">
+                <img src="<%= @product.image %>" alt=""> 
+            </div>
         </div>
         <div class="formContainer">
             <%= form_tag(controller: "orders", action: "create", method: "post", class: "buy") do %>

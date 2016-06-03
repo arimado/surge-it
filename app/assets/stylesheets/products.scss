@@ -233,20 +233,40 @@ box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
 .featureProductContainer {
 	border: 1px solid blue;
 	margin: 20px;
+	display: flex;
+}
+
+.featureProductContainer  > div {
+	flex-grow: 1;
+	border: 1px solid red;
+	width: 100%;
 }
 
 .featureProductContainer .imageContainer {
 
 }
 
-.featureProductContainer .imageContainer img {
+.featureProductContainer .imageContainerInner {
 
 }
 
+.featureProductContainer .imageContainerInner img {
+
+}
 
 .featureProductContainer .formContainer {
 
 }
+
+.featureProductContainer .formContainer form {
+
+}
+
+.featureProductContainer .formContainer form input {
+
+}
+
+
 
 .productContentContainer {
 	margin: 0px 20px 20px 20px;
