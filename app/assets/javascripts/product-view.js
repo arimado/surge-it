@@ -4,12 +4,12 @@ console.log('loaded product-view.js');
 
 var currentProductId = $('#currentProduct').val();
 
-var getOrdersAPIstring = '/api/products/' + currentProductId
+var getProductURI = '/api/products/' + currentProductId
 
 function poll() {
     setTimeout(function() {
         $.ajax({
-              url: getOrdersAPIstring,
+              url: getProductURI,
               dataType: 'json',
               cache: false,
               success: function(data) {

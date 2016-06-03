@@ -8,15 +8,15 @@
         <div class="left surgePriceContainer">
             <div class="topDashInner">
                 <div class="bigNumLabel">Current Surge Boost</div>
-                <div class="bigNum"><%= @product.price - @product.price_base %></div>
+                <div class="bigNum" id="surgePrice"><%= @product.price - @product.price_base %></div>
                 <div class="smallNums">
                     <div class="smallPair">
                         <div class="smallNumLabel">Real Price</div>
-                        <div class="smallNum"> <%= @product.price_base %> </div>
+                        <div class="smallNum" id="basePrice"> <%= @product.price_base %> </div>
                     </div>
                     <div class="smallPair">
                         <div class="smallNumLabel">Total Price</div>
-                        <div class="smallNum"> <%= @product.price_base %></div>
+                        <div class="smallNum" id="totalPrice"> <%= @product.price %></div>
                     </div>
                 </div>
             </div>

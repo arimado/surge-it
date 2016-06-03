@@ -24,7 +24,7 @@ $(document).ready(function(){
     ];
 
     var options = {
-        bezierCurve: true,
+        bezierCurve: false,
         showTooltips: true,
         scaleShowVerticalLines: false,
         scaleShowHorizontalLines: false,
@@ -49,7 +49,12 @@ $(document).ready(function(){
 
     var currentState = {};
     var currentProductId = $('#currentProduct').val();
+    var $surgePrice = $('#surgePrice');
+    var $basePrice = $('#basePrice');
+    var $totalPrice = $('#totalPrice');
+
     var getOrdersAPIstring = '/api/products/' + currentProductId + '/orders';
+    var geProductAPIstring = '/api/products/' + currentProductId;
 
     var mapDatesAndPrices = function (data, value) {
         return data.map(function(item) {
@@ -69,7 +74,7 @@ $(document).ready(function(){
     // for every different data point or different key we are referencing we
     // will loop through the mapped array of objects and add it to the chart
 
-    var setInitialDataOnChart = function(data) {
+    var setInitialDataOnChart = function (data) {
         var args = Array.prototype.slice.call(arguments);
         var dataPoints = args.slice(1, args.length);
         dataPoints.forEach(function(dataPoint, index) {
@@ -87,6 +92,8 @@ $(document).ready(function(){
         return newValues;
     }
 
+    // set data on chart
+
     var setNewDataOnChart = function(newData, chart) {
         if (newData.length > 0) {
             var args = Array.prototype.slice.call(arguments);
@@ -100,24 +107,32 @@ $(document).ready(function(){
         }
     }
 
-    function poll() {
+    var updateProductDash = function(data) {
+        $surgePrice.html(data.price - data.price_base);
+        $basePrice.html(data.price_base);
+        $totalPrice.html(data.price);
+    }
+
+    var updateOrderDash = function(data) {
+
+    }
+
+    var orderPoll = function() {
         setTimeout(function() {
             $.ajax({
                   url: getOrdersAPIstring,
                   dataType: 'json',
                   cache: false,
                   success: function(data) {
-
-                      console.log('currentState: ' + currentState.length);
-                      console.log('data.length: ' + data.length)
-                      // get new data
-                      console.log(findNewData(currentState, data));
+                    //   console.log('currentState: ' + currentState.length);
+                    //   console.log('data.length: ' + data.length)
+                    //  // get new data
                       var newData = findNewData(currentState, data);
                       // set new data on chart
                       setNewDataOnChart(newData, myDateLineChart, 'price', 'revenue', 'revenue_base', 'revenue_surge');
                       // update current state
                       if (newData.length > 0) currentState = data;
-                      poll();
+                      orderPoll();
                   },
                   error: function(xhr, status, err) {
                   }
@@ -125,12 +140,32 @@ $(document).ready(function(){
         }, 5000);
     };
 
+    var productPoll = function() {
+        setTimeout(function() {
+            $.ajax({
+                  url: geProductAPIstring,
+                  dataType: 'json',
+                  cache: false,
+                  success: function(data) {
+                      updateProductDash(data);
+                      productPoll();
+                  },
+                  error: function(xhr, status, err) {
+                  }
+            });
+        }, 1000);
+    }
+
+
     // -------------------------------------------------------------------------
     // EVENTS ------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
-    poll();
+    // INITIALISE POLLING
+    orderPoll();
+    productPoll();
 
+    // INITIALISE BOARD
     $.ajax({
           url: getOrdersAPIstring,
           dataType: 'json',
@@ -145,9 +180,6 @@ $(document).ready(function(){
           error: function(xhr, status, err) {
           }
     });
-
-
-
 
     $('#fetch').click(function(e){
         $.ajax({
