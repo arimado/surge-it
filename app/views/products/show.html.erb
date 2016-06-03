@@ -9,19 +9,25 @@
         </div>
     </div>
     <div class="featureProductContainer">
-        <%= form_tag(controller: "orders", action: "create", method: "post", class: "buy") do %>
-          <%= hidden_field_tag(:product_id, @product.id) %>
-          <%= label_tag( @product.price ) %>
-          <%= submit_tag("ADD ORDER") %>
-        <% end %>
+        <div class="imageContainer">
+            <img src="<%= @product.image %>" alt="">
+        </div>
+        <div class="formContainer">
+            <%= form_tag(controller: "orders", action: "create", method: "post", class: "buy") do %>
+              <%= hidden_field_tag(:product_id, @product.id) %>
+              <%= label_tag( @product.price ) %>
+              <%= submit_tag("ADD ORDER") %>
+            <% end %>
+        </div>
     </div>
     <div class="productContentContainer">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas explicabo possimus dolor error tenetur, labore consequatur saepe vel voluptatibus laudantium atque, nulla vitae quod quos, nam veritatis pariatur, quidem recusandae?</p>
     </div>
     <div class="relatedProductsContainer">
         <ul>
-            <li>thing</li>
-            <li>thing</li>
-            <li>thing</li>
+            <li>related thing</li>
+            <li>related thing</li>
+            <li>related thing</li>
         </ul>
     </div>
 </div>
