@@ -52,6 +52,8 @@ $(document).ready(function(){
     var $surgePrice = $('#surgePrice');
     var $basePrice = $('#basePrice');
     var $totalPrice = $('#totalPrice');
+    var $todayOrderTotal = $('#todayOrderTotal');
+    var $todayOrderCount = $('#todayOrderCount');
 
     var getOrdersAPIstring = '/api/products/' + currentProductId + '/orders';
     var geProductAPIstring = '/api/products/' + currentProductId;
@@ -104,6 +106,9 @@ $(document).ready(function(){
                 })
             })
             chart.update();
+            return newData;
+        } else {
+            return currentState;
         }
     }
 
@@ -114,7 +119,9 @@ $(document).ready(function(){
     }
 
     var updateOrderDash = function(data) {
-
+        console.log('updating order dasg');
+        $todayOrderCount.html(data.length);
+        $todayOrderTotal.html(data[data.length - 1].revenue);
     }
 
     var orderPoll = function() {
@@ -124,20 +131,23 @@ $(document).ready(function(){
                   dataType: 'json',
                   cache: false,
                   success: function(data) {
-                    //   console.log('currentState: ' + currentState.length);
-                    //   console.log('data.length: ' + data.length)
-                    //  // get new data
-                      var newData = findNewData(currentState, data);
-                      // set new data on chart
-                      setNewDataOnChart(newData, myDateLineChart, 'price', 'revenue', 'revenue_base', 'revenue_surge');
-                      // update current state
-                      if (newData.length > 0) currentState = data;
-                      orderPoll();
+
+                        var newData = findNewData(currentState, data);
+
+                        setNewDataOnChart(newData, myDateLineChart, 'price', 'revenue', 'revenue_base', 'revenue_surge');
+
+                        if (newData.length > 0) {
+                            currentState = data;
+                            // update orders
+                            updateOrderDash(data);
+
+                        }
+                        orderPoll();
                   },
                   error: function(xhr, status, err) {
                   }
             });
-        }, 5000);
+        }, 1000);
     };
 
     var productPoll = function() {
