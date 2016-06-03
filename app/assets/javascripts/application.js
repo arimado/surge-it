@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.animateNumber.js
 //= require turbolinks
 //= require moment.min.js
 //= require chart.core.js

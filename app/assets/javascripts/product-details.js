@@ -54,6 +54,8 @@ $(document).ready(function(){
     var $totalPrice = $('#totalPrice');
     var $todayOrderTotal = $('#todayOrderTotal');
     var $todayOrderCount = $('#todayOrderCount');
+    var todayOrderTotal = 0;
+    var todayOrderCount = 0;
 
     var getOrdersAPIstring = '/api/products/' + currentProductId + '/orders';
     var geProductAPIstring = '/api/products/' + currentProductId;
@@ -120,9 +122,44 @@ $(document).ready(function(){
 
     var updateOrderDash = function(data) {
         console.log('updating order dasg');
+
         $todayOrderCount.html(data.length);
         $todayOrderTotal.html(data[data.length - 1].revenue);
+
+        var decimal_places = 2;
+        var decimal_factor = decimal_places === 0 ? 1 : Math.pow(10, decimal_places);
+
+        var startNumber = 0;
+        var targetNumber = 0;
+
+
+        $todayOrderTotal
+          .prop('number', 10)
+          .animateNumber(
+            {
+              number: 20.10 * decimal_factor,
+              numberStep: function(now, tween) {
+                var floored_number = Math.floor(now) / decimal_factor,
+                    target = $(tween.elem);
+                if (decimal_places > 0) {
+                  // force decimal places even if they are 0
+                  floored_number = floored_number.toFixed(decimal_places);
+                  // replace '.' separator with ','
+                  floored_number = floored_number.toString().replace('.', ',');
+
+                }
+
+                target.text('$' + floored_number);
+              }
+            },
+            1000
+          );
+
+
     }
+
+
+
 
     var orderPoll = function() {
         setTimeout(function() {
@@ -186,6 +223,8 @@ $(document).ready(function(){
              setInitialDataOnChart(data, 'price', 'revenue', 'revenue_base', 'revenue_surge');
              myDateLineChart.update();
              currentState = data;
+             todayOrderTotal = data[data.length - 1].revenue;
+             todayCountTotal = data.length;
           },
           error: function(xhr, status, err) {
           }
