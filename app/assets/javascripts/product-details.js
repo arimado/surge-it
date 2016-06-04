@@ -120,6 +120,42 @@ $(document).ready(function(){
         $totalPrice.html(data.price);
     }
 
+    var findTodaysOrders = function (data) {
+        var startOfToday = new Date().setHours(0, 0, 0, 0);
+        var endOfToday = new Date().setHours(23,59,59,999);
+        return data.filter(function(order) {
+            var currentTime = new Date(order.created_at).getTime();
+            if (currentTime >= startOfToday && currentTime <= endOfToday) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+    }; 
+
+    var findLastWeeksOrders = function (data) {
+        var startTime = new Date().setHours(0, 0, 0, 0);
+        var endTime = new Date().setHours(23,59,59,999);
+        return data.filter(function(order) {
+            var currentTime = new Date(order.created_at).getTime();
+            if (currentTime >= startTime && currentTime <= endTime) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+    };
+
+    var getTotalPriceOfOrders = function (data) {
+        return data.reduce(function(prevOrder, nextOrder) {
+            if (typeof prevOrder !== "number") {
+                return parseFloat(prevOrder.price) + parseFloat(nextOrder.price);
+            } else {
+                return prevOrder + parseFloat(nextOrder.price);
+            }
+        })
+    }
+
     var updateOrderDash = function(previousState, newState) {
 
         console.log('updating order dasg');
@@ -129,26 +165,29 @@ $(document).ready(function(){
         // I wont be able to just reference total revenue, i'm going to have to
         // filter than reduce to todays revenue
 
-        var startOrderTotal = previousState[previousState.length - 1].revenue;
-        var targetOrderTotal = newState[newState.length - 1].revenue;
-
-        var startOrderCount = previousState.length;
-        var targetOrderCount = newState.length;
+        // var startOrderTotal = previousState[previousState.length - 1].revenue;
+        // var targetOrderTotal = newState[newState.length - 1].revenue;
+        //
+        // var startOrderCount = previousState.length;
+        // var targetOrderCount = newState.length;
 
         // filter for today
             // reduce
             // count
-        var startOfToday = new Date().setHours(0, 0, 0, 0);
-        var endOfToday = new Date().setHours(23,59,59,999);
 
-        var previousOrders = previousState.filter(function(order) {
-            var currentTime = new Date(order.created_at).getTime();
-            if (currentTime >= startOfToday && currentTime <= endOfToday) {
-                return true;
-            }
-        };
+        var todaysPreviousOrders = findTodaysOrders(previousState);
+        var todaysNewOrders = findTodaysOrders(newState);
 
+        var startOfTodaysOrderCount = todaysPreviousOrders.length;
+        var targetOfTodaysOrderCount = todaysNewOrders.length;
 
+        var startOfTodaysOrderTotal = getTotalPriceOfOrders(todaysPreviousOrders);
+        var targetOfTodaysOrderTotal = getTotalPriceOfOrders(todaysNewOrders);;
+
+        console.log('startOfTodaysOrderCount: ' + startOfTodaysOrderCount);
+        console.log('targetOfTodaysOrderCount: ' + targetOfTodaysOrderCount);
+        console.log('startOfTodaysOrderTotal: ' + startOfTodaysOrderTotal);
+        console.log('targetOfTodaysOrderTotal: ' + targetOfTodaysOrderTotal);
 
         // filter for day before or week before
             // reduce
@@ -159,10 +198,10 @@ $(document).ready(function(){
 
 
         $todayOrderTotal
-            .prop('number', startOrderTotal)
+            .prop('number', startOfTodaysOrderTotal)
             .animateNumber(
                 {
-                    number: targetOrderTotal,
+                    number: targetOfTodaysOrderTotal,
                     numberStep: function(now, tween) {
                         var floored_number = now.toLocaleString('en-IN', { maximumFractionDigits: 2 });
                         var target = $(tween.elem);
