@@ -56,6 +56,8 @@ $(document).ready(function(){
     var $todayOrderCount = $('#todayOrderCount');
     var todayOrderTotal = 0;
     var todayOrderCount = 0;
+    var $lastWeeksOrderTotal = $('#lastWeeksOrderTotal');
+    var $lastWeeksOrderCount = $('#leastWeeksOrderCount');
 
     var getOrdersAPIstring = '/api/products/' + currentProductId + '/orders';
     var geProductAPIstring = '/api/products/' + currentProductId;
@@ -148,8 +150,6 @@ $(document).ready(function(){
         var startOfToday = new Date().setHours(0, 0, 0, 0); //setHours returns the miliseconds
         var timeNow = new Date().getTime();
 
-        $todayOrderCount.html(newState.length);
-
         var todaysPreviousOrders = findOrdersByStartEndTime(previousState, startOfToday, timeNow);
         var todaysNewOrders = findOrdersByStartEndTime(newState, startOfToday, timeNow);
         var lastWeeksPrevOrders = findOrdersByStartEndTime(previousState, thisTimeLastWeek, thisTimeYesterday);
@@ -159,11 +159,8 @@ $(document).ready(function(){
         var lastWeeksPrevOrdersTotal = getTotalPriceOfOrders(lastWeeksPrevOrders);
         var lastWeeksNewOrdersTotal = getTotalPriceOfOrders(lastWeeksNewOrders);
 
-
-
-        // filter for day before or week before
-            // reduce
-            // count
+        console.log('todaysPrevOrderTotal: ' + todaysPrevOrderTotal);
+        console.log('todaysNewOrderTotal: ' + todaysNewOrderTotal)
 
         $todayOrderTotal
             .prop('number', todaysPrevOrderTotal)
@@ -192,6 +189,37 @@ $(document).ready(function(){
                 },
                 1000
             );
+
+        $lastWeeksOrderTotal
+            .prop('number', lastWeeksPrevOrdersTotal)
+            .animateNumber(
+                {
+                    number: lastWeeksNewOrdersTotal,
+                    numberStep: function(now, tween) {
+                        var floored_number = now.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+                        var target = $(tween.elem);
+                        target.text('$' + floored_number);
+                    }
+                },
+                1000
+            );
+
+        $lastWeeksOrderCount
+            .prop('number', lastWeeksPrevOrders.length)
+            .animateNumber(
+                {
+                    number: lastWeeksNewOrders.length,
+                    numberStep: function(now, tween) {
+                        var floored_number = Math.round(now);
+                        var target = $(tween.elem);
+                        target.text(floored_number);
+                    }
+                },
+                1000
+            );
+
+
+
 
 
 
