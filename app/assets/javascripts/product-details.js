@@ -54,8 +54,6 @@ $(document).ready(function(){
     var $totalPrice = $('#totalPrice');
     var $todayOrderTotal = $('#todayOrderTotal');
     var $todayOrderCount = $('#todayOrderCount');
-    var todayOrderTotal = 0;
-    var todayOrderCount = 0;
     var $lastWeeksOrderTotal = $('#lastWeeksOrderTotal');
     var $lastWeeksOrderCount = $('#leastWeeksOrderCount');
 
@@ -116,6 +114,8 @@ $(document).ready(function(){
         }
     }
 
+    // DashBoard Functions
+
     var updateProductDash = function(data) {
         $surgePrice.html(data.price - data.price_base);
         $basePrice.html(data.price_base);
@@ -158,9 +158,6 @@ $(document).ready(function(){
         var todaysNewOrderTotal = getTotalPriceOfOrders(todaysNewOrders);
         var lastWeeksPrevOrdersTotal = getTotalPriceOfOrders(lastWeeksPrevOrders);
         var lastWeeksNewOrdersTotal = getTotalPriceOfOrders(lastWeeksNewOrders);
-
-        console.log('todaysPrevOrderTotal: ' + todaysPrevOrderTotal);
-        console.log('todaysNewOrderTotal: ' + todaysNewOrderTotal)
 
         $todayOrderTotal
             .prop('number', todaysPrevOrderTotal)
@@ -217,16 +214,10 @@ $(document).ready(function(){
                 },
                 1000
             );
-
-
-
-
-
-
     }
 
 
-
+    // Polling functions
 
     var orderPoll = function() {
         setTimeout(function() {
@@ -289,42 +280,13 @@ $(document).ready(function(){
              console.log('success')
              console.log();
              setInitialDataOnChart(data, 'price', 'revenue', 'revenue_base', 'revenue_surge');
+             updateOrderDash(data, data); 
              myDateLineChart.update();
              currentState = data;
-             todayOrderTotal = data[data.length - 1].revenue;
-             todayCountTotal = data.length;
           },
           error: function(xhr, status, err) {
           }
     });
 
-    $('#fetch').click(function(e){
-        $.ajax({
-              url: '/api/products/22/orders/create',
-              dataType: 'json',
-              method: 'POST',
-              cache: false,
-              success: function(data) {
-
-              },
-              error: function(xhr, status, err) {
-              }
-        });
-
-        // e.preventDefault();
-        // $.ajax({
-        //       url: '/api/products/' + currentProductId + '/orders',
-        //       dataType: 'json',
-        //       cache: false,
-        //       success: function(data) {
-        //          console.log('success')
-        //          console.log();
-        //          setInitialDataOnChart(data, 'price', 'revenue', 'revenue_base', 'revenue_surge');
-        //          myDateLineChart.update();
-        //       },
-        //       error: function(xhr, status, err) {
-        //       }
-        // });
-    })
 
 });
