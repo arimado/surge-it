@@ -154,40 +154,40 @@ $(document).ready(function(){
         var todaysNewOrders = findOrdersByStartEndTime(newState, startOfToday, timeNow);
         var lastWeeksPrevOrders = findOrdersByStartEndTime(previousState, thisTimeLastWeek, thisTimeYesterday);
         var lastWeeksNewOrders = findOrdersByStartEndTime(newState, thisTimeLastWeek, thisTimeYesterday);
+        var todaysPrevOrderTotal = getTotalPriceOfOrders(todaysPreviousOrders);
+        var todaysNewOrderTotal = getTotalPriceOfOrders(todaysNewOrders);
+        var lastWeeksPrevOrdersTotal = getTotalPriceOfOrders(lastWeeksPrevOrders);
+        var lastWeeksNewOrdersTotal = getTotalPriceOfOrders(lastWeeksNewOrders);
 
-        var startOfTodaysOrderCount = todaysPreviousOrders.length;
-        var targetOfTodaysOrderCount = todaysNewOrders.length;
-        var startOfLastWeeksOrdersCount = lastWeeksPrevOrders.length;
-        var targetOflastWeeksNewOrdersCount = lastWeeksNewOrders.length;
 
-        var startOfTodaysOrderTotal = getTotalPriceOfOrders(todaysPreviousOrders);
-        var targetOfTodaysOrderTotal = getTotalPriceOfOrders(todaysNewOrders);
-        var startOfLastWeeksOrdersTotal = getTotalPriceOfOrders(lastWeeksPrevOrders);
-        var targetOflastWeeksOrdersTotal = getTotalPriceOfOrders(lastWeeksNewOrders);
-
-        console.log('all orders: ' + newState.length);
-        console.log('startOfTodaysOrderCount: ' + startOfTodaysOrderCount);
-        console.log('targetOfTodaysOrderCount: ' + targetOfTodaysOrderCount);
-        console.log('startOfLastWeeksOrdersCount: ' + startOfLastWeeksOrdersCount);
-        console.log('targetOflastWeeksNewOrdersCount: ' + targetOflastWeeksNewOrdersCount);
-        console.log('startOfTodaysOrderTotal: ' + startOfTodaysOrderTotal);
-        console.log('targetOfTodaysOrderTotal: ' + targetOfTodaysOrderTotal);
-        console.log('startOfLastWeeksOrdersTotal: ' + startOfLastWeeksOrdersTotal);
-        console.log('targetOflastWeeksOrdersTotal: ' + targetOflastWeeksOrdersTotal);
 
         // filter for day before or week before
             // reduce
             // count
 
         $todayOrderTotal
-            .prop('number', startOfTodaysOrderTotal)
+            .prop('number', todaysPrevOrderTotal)
             .animateNumber(
                 {
-                    number: targetOfTodaysOrderTotal,
+                    number: todaysNewOrderTotal,
                     numberStep: function(now, tween) {
                         var floored_number = now.toLocaleString('en-IN', { maximumFractionDigits: 2 });
                         var target = $(tween.elem);
                         target.text('$' + floored_number);
+                    }
+                },
+                1000
+            );
+
+        $todayOrderCount
+            .prop('number', todaysPreviousOrders.length)
+            .animateNumber(
+                {
+                    number: todaysNewOrders.length,
+                    numberStep: function(now, tween) {
+                        var floored_number = Math.round(now);
+                        var target = $(tween.elem);
+                        target.text(floored_number);
                     }
                 },
                 1000
