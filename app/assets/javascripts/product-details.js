@@ -125,10 +125,38 @@ $(document).ready(function(){
         console.log('updating order dasg');
 
         $todayOrderCount.html(newState.length);
-        $todayOrderTotal.html(newState[newState.length - 1].revenue);
+
+        // I wont be able to just reference total revenue, i'm going to have to
+        // filter than reduce to todays revenue
 
         var startOrderTotal = previousState[previousState.length - 1].revenue;
         var targetOrderTotal = newState[newState.length - 1].revenue;
+
+        var startOrderCount = previousState.length;
+        var targetOrderCount = newState.length;
+
+        // filter for today
+            // reduce
+            // count
+        var startOfToday = new Date().setHours(0, 0, 0, 0);
+        var endOfToday = new Date().setHours(23,59,59,999);
+
+        var previousOrders = previousState.filter(function(order) {
+            var currentTime = new Date(order.created_at).getTime();
+            if (currentTime >= startOfToday && currentTime <= endOfToday) {
+                return true;
+            }
+        };
+
+
+
+        // filter for day before or week before
+            // reduce
+            // count
+
+
+
+
 
         $todayOrderTotal
             .prop('number', startOrderTotal)
@@ -143,7 +171,6 @@ $(document).ready(function(){
                 },
                 1000
             );
-
 
 
 
