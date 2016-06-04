@@ -135,23 +135,24 @@ $(document).ready(function(){
         var targetNumber = 0;
 
         $todayOrderTotal
-          .prop('number', 0.01)
+          .prop('number', 10.25)
           .animateNumber(
             {
-              number: 0.25,
+              number: 900.25,
               numberStep: function(now, tween) {
 
                 // var floored_number = Math.floor(now) / decimal_factor;
-                var floored_number = now;
-                
+                var floored_number = now.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+
+
                 var target = $(tween.elem);
 
-                if (decimal_places > 0) {
-                  // force decimal places even if they are 0
-                  floored_number = floored_number.toFixed(decimal_places);
-                  // replace '.' separator with ','
-                //   floored_number = floored_number.toString().replace('.', ',');
-                }
+                // if (decimal_places > 0) {
+                //   // force decimal places even if they are 0
+                //   floored_number = floored_number.toFixed(decimal_places);
+                //   // replace '.' separator with ','
+                // //   floored_number = floored_number.toString().replace('.', ',');
+                // }
 
                 target.text('$' + floored_number);
               }
