@@ -120,45 +120,31 @@ $(document).ready(function(){
         $totalPrice.html(data.price);
     }
 
-    var updateOrderDash = function(data) {
+    var updateOrderDash = function(previousState, newState) {
 
         console.log('updating order dasg');
 
-        $todayOrderCount.html(data.length);
-        $todayOrderTotal.html(data[data.length - 1].revenue);
+        $todayOrderCount.html(newState.length);
+        $todayOrderTotal.html(newState[newState.length - 1].revenue);
 
-
-        var decimal_places = 2;
-        var decimal_factor = decimal_places === 0 ? 1 : Math.pow(10, decimal_places);
-
-        var startNumber = 0;
-        var targetNumber = 0;
+        var startOrderTotal = previousState[previousState.length - 1].revenue;
+        var targetOrderTotal = newState[newState.length - 1].revenue;
 
         $todayOrderTotal
-          .prop('number', 10.25)
-          .animateNumber(
-            {
-              number: 900.25,
-              numberStep: function(now, tween) {
+            .prop('number', startOrderTotal)
+            .animateNumber(
+                {
+                    number: targetOrderTotal,
+                    numberStep: function(now, tween) {
+                        var floored_number = now.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+                        var target = $(tween.elem);
+                        target.text('$' + floored_number);
+                    }
+                },
+                1000
+            );
 
-                // var floored_number = Math.floor(now) / decimal_factor;
-                var floored_number = now.toLocaleString('en-IN', { maximumFractionDigits: 2 });
 
-
-                var target = $(tween.elem);
-
-                // if (decimal_places > 0) {
-                //   // force decimal places even if they are 0
-                //   floored_number = floored_number.toFixed(decimal_places);
-                //   // replace '.' separator with ','
-                // //   floored_number = floored_number.toString().replace('.', ',');
-                // }
-
-                target.text('$' + floored_number);
-              }
-            },
-            1000
-          );
 
 
     }
@@ -172,16 +158,17 @@ $(document).ready(function(){
                   url: getOrdersAPIstring,
                   dataType: 'json',
                   cache: false,
-                  success: function(data) {
+                  success: function(newState) {
 
-                        var newData = findNewData(currentState, data);
+                        var newData = findNewData(currentState, newState);
 
                         setNewDataOnChart(newData, myDateLineChart, 'price', 'revenue', 'revenue_base', 'revenue_surge');
 
                         if (newData.length > 0) {
-                            currentState = data;
+                            updateOrderDash(currentState, newState);
+                            currentState = newState;
                             // update orders
-                            updateOrderDash(data);
+
 
                         }
                         orderPoll();
