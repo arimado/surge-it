@@ -120,22 +120,7 @@ $(document).ready(function(){
         $totalPrice.html(data.price);
     }
 
-    var findTodaysOrders = function (data) {
-        var startOfToday = new Date().setHours(0, 0, 0, 0);
-        var endOfToday = new Date().setHours(23,59,59,999);
-        return data.filter(function(order) {
-            var currentTime = new Date(order.created_at).getTime();
-            if (currentTime >= startOfToday && currentTime <= endOfToday) {
-                return true;
-            } else {
-                return false;
-            }
-        });
-    }; 
-
-    var findLastWeeksOrders = function (data) {
-        var startTime = new Date().setHours(0, 0, 0, 0);
-        var endTime = new Date().setHours(23,59,59,999);
+    var findOrdersByStartEndTime = function (data, startTime, endTime) {
         return data.filter(function(order) {
             var currentTime = new Date(order.created_at).getTime();
             if (currentTime >= startTime && currentTime <= endTime) {
@@ -154,48 +139,45 @@ $(document).ready(function(){
                 return prevOrder + parseFloat(nextOrder.price);
             }
         })
-    }
+    };
 
     var updateOrderDash = function(previousState, newState) {
 
-        console.log('updating order dasg');
+        var thisTimeLastWeek = new Date().getTime() - (7 * 24 * 60 * 60 * 1000);
+        var thisTimeYesterday = new Date().getTime() - (24 * 60 * 60 * 1000);
+        var startOfToday = new Date().setHours(0, 0, 0, 0); //setHours returns the miliseconds
+        var timeNow = new Date().getTime();
 
         $todayOrderCount.html(newState.length);
 
-        // I wont be able to just reference total revenue, i'm going to have to
-        // filter than reduce to todays revenue
-
-        // var startOrderTotal = previousState[previousState.length - 1].revenue;
-        // var targetOrderTotal = newState[newState.length - 1].revenue;
-        //
-        // var startOrderCount = previousState.length;
-        // var targetOrderCount = newState.length;
-
-        // filter for today
-            // reduce
-            // count
-
-        var todaysPreviousOrders = findTodaysOrders(previousState);
-        var todaysNewOrders = findTodaysOrders(newState);
+        var todaysPreviousOrders = findOrdersByStartEndTime(previousState, startOfToday, timeNow);
+        var todaysNewOrders = findOrdersByStartEndTime(newState, startOfToday, timeNow);
+        var lastWeeksPrevOrders = findOrdersByStartEndTime(previousState, thisTimeLastWeek, thisTimeYesterday);
+        var lastWeeksNewOrders = findOrdersByStartEndTime(newState, thisTimeLastWeek, thisTimeYesterday);
 
         var startOfTodaysOrderCount = todaysPreviousOrders.length;
         var targetOfTodaysOrderCount = todaysNewOrders.length;
+        var startOfLastWeeksOrdersCount = lastWeeksPrevOrders.length;
+        var targetOflastWeeksNewOrdersCount = lastWeeksNewOrders.length;
 
         var startOfTodaysOrderTotal = getTotalPriceOfOrders(todaysPreviousOrders);
-        var targetOfTodaysOrderTotal = getTotalPriceOfOrders(todaysNewOrders);;
+        var targetOfTodaysOrderTotal = getTotalPriceOfOrders(todaysNewOrders);
+        var startOfLastWeeksOrdersTotal = getTotalPriceOfOrders(lastWeeksPrevOrders);
+        var targetOflastWeeksOrdersTotal = getTotalPriceOfOrders(lastWeeksNewOrders);
 
+        console.log('all orders: ' + newState.length);
         console.log('startOfTodaysOrderCount: ' + startOfTodaysOrderCount);
         console.log('targetOfTodaysOrderCount: ' + targetOfTodaysOrderCount);
+        console.log('startOfLastWeeksOrdersCount: ' + startOfLastWeeksOrdersCount);
+        console.log('targetOflastWeeksNewOrdersCount: ' + targetOflastWeeksNewOrdersCount);
         console.log('startOfTodaysOrderTotal: ' + startOfTodaysOrderTotal);
         console.log('targetOfTodaysOrderTotal: ' + targetOfTodaysOrderTotal);
+        console.log('startOfLastWeeksOrdersTotal: ' + startOfLastWeeksOrdersTotal);
+        console.log('targetOflastWeeksOrdersTotal: ' + targetOflastWeeksOrdersTotal);
 
         // filter for day before or week before
             // reduce
             // count
-
-
-
-
 
         $todayOrderTotal
             .prop('number', startOfTodaysOrderTotal)
