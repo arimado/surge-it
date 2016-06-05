@@ -55,7 +55,7 @@ $(document).ready(function(){
         fill: true
     }
 
-    var myDateLineChart
+    var myDateLineChart;
 
     var ctx = document.getElementById("productChart").getContext("2d");
     myDateLineChart = new Chart(ctx).Scatter(chartData, options);
@@ -165,6 +165,18 @@ $(document).ready(function(){
         })
     };
 
+    var renderNewNumber = function (jqueryElement, startNumber, targetNumber, numberStepFunc, interval) {
+        jqueryElement
+            .prop('number', startNumber)
+            .animateNumber(
+                {
+                    number: targetNumber,
+                    numberStep: numberStepFunc
+                },
+                interval
+            );
+    }
+
     var updateOrderDash = function(previousState, newState) {
 
         var thisTimeLastWeek = new Date().getTime() - (7 * 24 * 60 * 60 * 1000);
@@ -183,61 +195,38 @@ $(document).ready(function(){
 
         // RENDER CHANGES TO DOM USING animateNumber.js
 
-        $todayOrderTotal
-            .prop('number', todaysPrevOrderTotal)
-            .animateNumber(
-                {
-                    number: todaysNewOrderTotal,
-                    numberStep: function(now, tween) {
-                        var floored_number = now.toLocaleString('en-IN', { maximumFractionDigits: 2 });
-                        var target = $(tween.elem);
-                        target.text('$' + floored_number);
-                    }
-                },
-                1000
-            );
+        renderNewNumber($todayOrderTotal, todaysPrevOrderTotal, todaysNewOrderTotal,
+            function(now, tween) {
+                var floored_number = now.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+                var target = $(tween.elem);
+                target.text('$' + floored_number);
+            },
+        1000);
 
-        $todayOrderCount
-            .prop('number', todaysPreviousOrders.length)
-            .animateNumber(
-                {
-                    number: todaysNewOrders.length,
-                    numberStep: function(now, tween) {
-                        var floored_number = Math.round(now);
-                        var target = $(tween.elem);
-                        target.text(floored_number);
-                    }
-                },
-                1000
-            );
+        renderNewNumber($todayOrderCount, todaysPreviousOrders.length, todaysNewOrders.length,
+            function(now, tween) {
+                var floored_number = Math.round(now);
+                var target = $(tween.elem);
+                target.text(floored_number);
+            },
+        1000);
 
-        $lastWeeksOrderTotal
-            .prop('number', lastWeeksPrevOrdersTotal)
-            .animateNumber(
-                {
-                    number: lastWeeksNewOrdersTotal,
-                    numberStep: function(now, tween) {
-                        var floored_number = now.toLocaleString('en-IN', { maximumFractionDigits: 2 });
-                        var target = $(tween.elem);
-                        target.text('$' + floored_number);
-                    }
-                },
-                1000
-            );
+        renderNewNumber($lastWeeksOrderTotal, lastWeeksPrevOrdersTotal, lastWeeksNewOrdersTotal,
+            function(now, tween) {
+                var floored_number = now.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+                var target = $(tween.elem);
+                target.text('$' + floored_number);
+            },
+        1000);
 
-        $lastWeeksOrderCount
-            .prop('number', lastWeeksPrevOrders.length)
-            .animateNumber(
-                {
-                    number: lastWeeksNewOrders.length,
-                    numberStep: function(now, tween) {
-                        var floored_number = Math.round(now);
-                        var target = $(tween.elem);
-                        target.text(floored_number);
-                    }
-                },
-                1000
-            );
+        renderNewNumber($lastWeeksOrderTotal, lastWeeksPrevOrdersTotal, lastWeeksNewOrdersTotal,
+            function(now, tween) {
+                var floored_number = now.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+                var target = $(tween.elem);
+                target.text('$' + floored_number);
+            },
+        1000);
+
     }
 
     // Polling functions
@@ -296,7 +285,7 @@ $(document).ready(function(){
           cache: false,
           success: function(data) {
              console.log('success')
-             console.log(); 
+             console.log();
              setInitialDataOnChart(data, 'price');
              updateOrderDash(data, data);
              myDateLineChart.update();
