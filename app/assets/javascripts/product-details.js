@@ -2,10 +2,27 @@ console.log('loaded: script.js');
 
 $(document).ready(function(){
 
-    // CHART.JS AND SCATTER JS STUFF
+    // -------------------------------------------------------------------------
+    // GLOBALS -----------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-    var chartData = [
-        {
+    var currentState = {};
+    var currentProductId = $('#currentProduct').val();
+    var $surgePrice = $('#surgePrice');
+    var $basePrice = $('#basePrice');
+    var $totalPrice = $('#totalPrice');
+    var $todayOrderTotal = $('#todayOrderTotal');
+    var $todayOrderCount = $('#todayOrderCount');
+    var $lastWeeksOrderTotal = $('#lastWeeksOrderTotal');
+    var $lastWeeksOrderCount = $('#leastWeeksOrderCount');
+    var getOrdersAPIstring = '/api/products/' + currentProductId + '/orders';
+    var geProductAPIstring = '/api/products/' + currentProductId;
+
+    // -------------------------------------------------------------------------
+    // CHART.JS INITIALISE -----------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    var chartData = [{
            label: 'Temp',
            strokeColor: '#A31515'
         },
@@ -44,21 +61,8 @@ $(document).ready(function(){
     myDateLineChart = new Chart(ctx).Scatter(chartData, options);
 
     // -------------------------------------------------------------------------
+    // CHART FUNCTIONS ---------------------------------------------------------
     // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-
-    var currentState = {};
-    var currentProductId = $('#currentProduct').val();
-    var $surgePrice = $('#surgePrice');
-    var $basePrice = $('#basePrice');
-    var $totalPrice = $('#totalPrice');
-    var $todayOrderTotal = $('#todayOrderTotal');
-    var $todayOrderCount = $('#todayOrderCount');
-    var $lastWeeksOrderTotal = $('#lastWeeksOrderTotal');
-    var $lastWeeksOrderCount = $('#leastWeeksOrderCount');
-
-    var getOrdersAPIstring = '/api/products/' + currentProductId + '/orders';
-    var geProductAPIstring = '/api/products/' + currentProductId;
 
     var mapDatesAndPrices = function (data, value) {
         return data.map(function(item) {
@@ -78,6 +82,14 @@ $(document).ready(function(){
     // for every different data point or different key we are referencing we
     // will loop through the mapped array of objects and add it to the chart
 
+    // notes ...................................................................
+
+    // GOAL: to only show a single data point at a time
+    // instead of looping through every forEach - just loop through the one you
+    // want
+
+    // end notes ...............................................................
+
     var setInitialDataOnChart = function (data) {
         var args = Array.prototype.slice.call(arguments);
         var dataPoints = args.slice(1, args.length);
@@ -95,6 +107,7 @@ $(document).ready(function(){
         }
         return newValues;
     }
+
 
     // set data on chart
 
@@ -114,13 +127,22 @@ $(document).ready(function(){
         }
     }
 
-    // DashBoard Functions
+    // -------------------------------------------------------------------------
+    // DASHBOARD FUNCTIONS -----------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    //  updateProductDash() simply recieves data from polling the product itself
+    //  rather than the details
+    //  this is called in productPoll()
 
     var updateProductDash = function(data) {
         $surgePrice.html(data.price - data.price_base);
         $basePrice.html(data.price_base);
         $totalPrice.html(data.price);
     }
+
+    //  below are functions for parsing and displaying data related to orders
+    //  updateOrderDash() is called in orderPoll()
 
     var findOrdersByStartEndTime = function (data, startTime, endTime) {
         return data.filter(function(order) {
@@ -158,6 +180,8 @@ $(document).ready(function(){
         var todaysNewOrderTotal = getTotalPriceOfOrders(todaysNewOrders);
         var lastWeeksPrevOrdersTotal = getTotalPriceOfOrders(lastWeeksPrevOrders);
         var lastWeeksNewOrdersTotal = getTotalPriceOfOrders(lastWeeksNewOrders);
+
+        // RENDER CHANGES TO DOM USING animateNumber.js
 
         $todayOrderTotal
             .prop('number', todaysPrevOrderTotal)
@@ -216,7 +240,6 @@ $(document).ready(function(){
             );
     }
 
-
     // Polling functions
 
     var orderPoll = function() {
@@ -226,17 +249,12 @@ $(document).ready(function(){
                   dataType: 'json',
                   cache: false,
                   success: function(newState) {
-
                         var newData = findNewData(currentState, newState);
-
-                        setNewDataOnChart(newData, myDateLineChart, 'price', 'revenue', 'revenue_base', 'revenue_surge');
-
+                        setNewDataOnChart(newData, myDateLineChart, 'price');
                         if (newData.length > 0) {
                             updateOrderDash(currentState, newState);
                             currentState = newState;
                             // update orders
-
-
                         }
                         orderPoll();
                   },
@@ -252,8 +270,8 @@ $(document).ready(function(){
                   url: geProductAPIstring,
                   dataType: 'json',
                   cache: false,
-                  success: function(data) {
-                      updateProductDash(data);
+                  success: function(newState) {
+                      updateProductDash(newState);
                       productPoll();
                   },
                   error: function(xhr, status, err) {
@@ -278,9 +296,9 @@ $(document).ready(function(){
           cache: false,
           success: function(data) {
              console.log('success')
-             console.log();
-             setInitialDataOnChart(data, 'price', 'revenue', 'revenue_base', 'revenue_surge');
-             updateOrderDash(data, data); 
+             console.log(); 
+             setInitialDataOnChart(data, 'price');
+             updateOrderDash(data, data);
              myDateLineChart.update();
              currentState = data;
           },
