@@ -1,4 +1,4 @@
-console.log('loaded: script.js');
+console.log('loaded: product-details.js');
 
 $(document).ready(function(){
 
@@ -303,11 +303,6 @@ $(document).ready(function(){
         console.log(currentDataPoint);
 
     });
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // EVENTS ------------------------------------------------------------------

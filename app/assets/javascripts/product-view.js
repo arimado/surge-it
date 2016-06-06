@@ -1,25 +1,34 @@
-console.log('loaded product-view.js');
+console.log('loaded: product-view.js');
+$(document).ready(function() {
+    // -------------------------------------------------------------------------
+    // GLOBALS -----------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-// JUST A POLLING THING THAT GETS ME THE PRODUCTS CURRENT PRICE
+    // fetch orders in last hour
+    var currentProductId = $('#currentProduct').val();
+    var getOrdersAPIstring = '/api/products/' + currentProductId + '/orders';
+    var geProductAPIstring = '/api/products/' + currentProductId;
 
-var currentProductId = $('#currentProduct').val();
+    var productPoll = function () {
+        setTimeout(function() {
+            $.ajax({
+                  url: getProductURI,
+                  dataType: 'json',
+                  cache: false,
+                  success: function(data) {
+                      $('#currentPrice').html('<strong> AJAX Current Price: </strong> ' + data.price);
+                      productPoll();;
+                  },
+                  error: function(xhr, status, err) {
+                  }
+            });
+        }, 1000);
+    };
 
-var getProductURI = '/api/products/' + currentProductId
+    // -------------------------------------------------------------------------
+    // EVENTS -----------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-function poll() {
-    setTimeout(function() {
-        $.ajax({
-              url: getProductURI,
-              dataType: 'json',
-              cache: false,
-              success: function(data) {
-                  $('#currentPrice').html('<strong> AJAX Current Price: </strong> ' + data.price);
-                  poll();
-              },
-              error: function(xhr, status, err) {
-              }
-        });
-    }, 1000);
-};
+    productPoll();
 
-poll();
+})
