@@ -12,11 +12,11 @@ class ProductsController < ApplicationController
 
     def new
         @product = Product.new
-
     end
 
     def create
-        product = Product.new product_params
+        product = Product.create product_params
+        redirect_to "/products/#{product.id}/details"
     end
 
     def edit
