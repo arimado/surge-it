@@ -5,30 +5,60 @@ $(document).ready(function() {
     // -------------------------------------------------------------------------
 
     // fetch orders in last hour
+    var $trendStateDiv = $('#trendStateDiv');
     var currentProductId = $('#currentProduct').val();
     var getOrdersAPIstring = '/api/products/' + currentProductId + '/orders';
     var geProductAPIstring = '/api/products/' + currentProductId;
+    var currentState = {};
+    var pollInterval = 2000;
 
-    var productPoll = function () {
+
+    var getPreviousDataByTime = function (data, milliseconds) {
+        var dateLimit = new Date().getTime() - milliseconds;
+        return data.filter(function(item) {
+            var dateInItem = new Date(item.created_at).getTime();
+            return (dateInItem > dateLimit);
+        });
+    }
+
+    var orderPoll = function() {
         setTimeout(function() {
             $.ajax({
-                  url: getProductURI,
+                  url: getOrdersAPIstring,
                   dataType: 'json',
                   cache: false,
-                  success: function(data) {
-                      $('#currentPrice').html('<strong> AJAX Current Price: </strong> ' + data.price);
-                      productPoll();;
+                  success: function(newState) {
+                        console.log(getPreviousDataByTime(newState, 5000));
+                        orderPoll()
                   },
                   error: function(xhr, status, err) {
                   }
             });
-        }, 1000);
+        }, pollInterval);
     };
+
+    var productPoll = function() {
+        setTimeout(function() {
+            $.ajax({
+                  url: geProductAPIstring,
+                  dataType: 'json',
+                  cache: false,
+                  success: function(newState) {
+                      productPoll();
+                  },
+                  error: function(xhr, status, err) {}
+            });
+        }, pollInterval);
+    }
+
+
+
 
     // -------------------------------------------------------------------------
     // EVENTS -----------------------------------------------------------------
     // -------------------------------------------------------------------------
 
     productPoll();
+    orderPoll();
 
 })

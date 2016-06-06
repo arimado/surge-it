@@ -15,6 +15,7 @@
             </div>
         </div>
         <div class="formContainer">
+            <div id="trendState"> </div>
             <%= form_tag(controller: "orders", action: "create", method: "post", class: "buy") do %>
               <%= hidden_field_tag(:product_id, @product.id) %>
               <%= label_tag( @product.price ) %>
