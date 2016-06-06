@@ -15,7 +15,7 @@ $(document).ready(function(){
     var $todayOrderTotal = $('#todayOrderTotal');
     var $todayOrderCount = $('#todayOrderCount');
     var $lastWeeksOrderTotal = $('#lastWeeksOrderTotal');
-    var $lastWeeksOrderCount = $('#leastWeeksOrderCount');
+    var $lastWeeksOrderCount = $('#lastWeeksOrderCount');
     var $chartRadioPrice = $('#chartRadioPrice');
     var $chartRadioRevenue = $('#chartRadioRevenue');
     var $chartRadioOrders = $('#chartRadioOrders');
@@ -224,13 +224,17 @@ $(document).ready(function(){
             },
         1000);
 
-        renderNewNumber($lastWeeksOrderTotal, lastWeeksPrevOrdersTotal, lastWeeksNewOrdersTotal,
+        renderNewNumber($lastWeeksOrderCount, lastWeeksPrevOrders.length, lastWeeksNewOrders.length,
             function(now, tween) {
-                var floored_number = now.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+                var floored_number = Math.round(now);
                 var target = $(tween.elem);
-                target.text('$' + floored_number);
+                target.text(floored_number);
             },
         1000);
+
+        debugger;
+
+
 
     }
 
