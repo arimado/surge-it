@@ -7,6 +7,7 @@ $(document).ready(function(){
     // -------------------------------------------------------------------------
 
     var currentState = {};
+    var currentDataPoint = '';
 
     var currentProductId = $('#currentProduct').val();
     var $surgePrice = $('#surgePrice');
@@ -232,10 +233,6 @@ $(document).ready(function(){
             },
         1000);
 
-        debugger;
-
-
-
     }
 
     // Polling functions
@@ -278,21 +275,37 @@ $(document).ready(function(){
         }, 1000);
     }
 
-    $chartRadioOrders.click(function() {
-        console.log('orders');
-    });
-
     $chartRadioPrice.click(function() {
-        console.log('price');
         // on click destroy the chart and change the reverence for the chart
         // initialisation functions
-        // myDateLineChart.destroy();
-        // setNewDataOnChart(currentState, myDateLineChart, currentDataPoint);
+
+
+        currentDataPoint = 'price';
+        console.log(currentDataPoint);
+        myDateLineChart.destroy();
+        myDateLineChart = new Chart(ctx).Scatter(chartData, options);
+        setNewDataOnChart(currentState, myDateLineChart, currentDataPoint);
+        console.log(myDateLineChart);
+
     });
 
     $chartRadioRevenue.click(function() {
-        console.log('rev');
+        currentDataPoint = 'revenue';
+        myDateLineChart.destroy();
+        myDateLineChart = new Chart(ctx).Scatter(chartData, options);
+        setNewDataOnChart(currentState, myDateLineChart, currentDataPoint);
+        console.log(myDateLineChart);
     });
+
+    $chartRadioOrders.click(function() {
+        currentDataPoint = 'orders';
+        console.log(currentDataPoint);
+
+    });
+
+
+
+
 
 
     // -------------------------------------------------------------------------
