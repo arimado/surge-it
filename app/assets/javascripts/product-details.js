@@ -7,6 +7,7 @@ $(document).ready(function(){
     // -------------------------------------------------------------------------
 
     var currentState = {};
+
     var currentProductId = $('#currentProduct').val();
     var $surgePrice = $('#surgePrice');
     var $basePrice = $('#basePrice');
@@ -15,6 +16,10 @@ $(document).ready(function(){
     var $todayOrderCount = $('#todayOrderCount');
     var $lastWeeksOrderTotal = $('#lastWeeksOrderTotal');
     var $lastWeeksOrderCount = $('#leastWeeksOrderCount');
+    var $chartRadioPrice = $('#chartRadioPrice');
+    var $chartRadioRevenue = $('#chartRadioRevenue');
+    var $chartRadioOrders = $('#chartRadioOrders');
+
     var getOrdersAPIstring = '/api/products/' + currentProductId + '/orders';
     var geProductAPIstring = '/api/products/' + currentProductId;
 
@@ -66,11 +71,11 @@ $(document).ready(function(){
 
     var mapDatesAndPrices = function (data, value) {
         return data.map(function(item) {
-                    result = {};
-                    result.x = new Date(item.created_at);
-                    result.y = parseFloat(item[value]);
-                    return result;
-                })
+                result = {};
+                result.x = new Date(item.created_at);
+                result.y = parseFloat(item[value]);
+                return result;
+            })
     };
 
     // setInitialDataOnChart(data, string1, string2 ...)
@@ -268,6 +273,22 @@ $(document).ready(function(){
             });
         }, 1000);
     }
+
+    $chartRadioOrders.click(function() {
+        console.log('orders');
+    });
+
+    $chartRadioPrice.click(function() {
+        console.log('price');
+        // on click destroy the chart and change the reverence for the chart
+        // initialisation functions
+        // myDateLineChart.destroy();
+        // setNewDataOnChart(currentState, myDateLineChart, currentDataPoint);
+    });
+
+    $chartRadioRevenue.click(function() {
+        console.log('rev');
+    });
 
 
     // -------------------------------------------------------------------------
