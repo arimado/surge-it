@@ -162,6 +162,7 @@ $(document).ready(function(){
     };
 
     var getTotalPriceOfOrders = function (data) {
+        if (data.length === 0) return 0;
         return data.reduce(function(prevOrder, nextOrder) {
             if (typeof prevOrder !== "number") {
                 return parseFloat(prevOrder.price) + parseFloat(nextOrder.price);
@@ -323,9 +324,10 @@ $(document).ready(function(){
           cache: false,
           success: function(data) {
              console.log('success')
-             console.log();
+             console.log(data);
              setInitialDataOnChart(data, 'price');
              updateOrderDash(data, data);
+
              myDateLineChart.update();
              currentState = data;
           },
