@@ -16,15 +16,20 @@
         <%= f.label :price_max %>
         <%= f.number_field :price_max, :required => true %>
     </div>
+    <div class="range-field">
+        <%= f.label :surge_multiplier %>
+        <%= f.range_field :surge_multiplier, :required => true , max: 3, step: 0.01%>
+    </div>
     <div class="input-field">
+
+        <%= f.text_area :description, :required => true, class: "materialize-textarea" %>
         <%= f.label :description %>
-        <%= f.text_field :description, :required => true %>
     </div>
     <div class="input-field">
         <%= f.label :image %>
         <%= f.text_field :image, :required => true %>
     </div>
-    <%= f.submit "Create Product", class: "btn waves-effect waves-light" %>
+    <%= f.submit "Create Product", class: "btn waves-effect waves-light"%>
 <% end %>
 
 <!--
