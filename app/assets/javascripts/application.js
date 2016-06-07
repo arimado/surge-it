@@ -13,7 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.animateNumber.js
+//= require materialize-sprockets
+//= require materialize/extras/nouislider
 //= require turbolinks
 //= require moment.min.js
 //= require chart.core.js
 //= require chart.scatter.js
+
+// GLOBAL JS here

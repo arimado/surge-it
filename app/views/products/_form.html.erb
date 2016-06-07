@@ -1,27 +1,30 @@
-<h4>This is in _form.html.erb</h4>
+
+<div class="cardHeader">
+    <h4>Creat product</h4>
+</div>
 
 <%= form_for @product do |f| %>
-    <p>
+    <div class="input-field">
         <%= f.label :name %>
         <%= f.text_field :name, :required => true %>
-    </p>
-    <p>
+    </div>
+    <div class="input-field">
         <%= f.label :price %>
         <%= f.number_field :price, :required => true %>
-    </p>
-    <p>
+    </div>
+    <div class="input-field">
         <%= f.label :price_max %>
         <%= f.number_field :price_max, :required => true %>
-    </p>
-    <p>
+    </div>
+    <div class="input-field">
         <%= f.label :description %>
         <%= f.text_field :description, :required => true %>
-    </p>
-    <p>
+    </div>
+    <div class="input-field">
         <%= f.label :image %>
         <%= f.text_field :image, :required => true %>
-    </p>
-    <%= f.submit %>
+    </div>
+    <%= f.submit "Create Product", class: "btn waves-effect waves-light" %>
 <% end %>
 
 <!--
