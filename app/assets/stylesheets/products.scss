@@ -234,12 +234,16 @@ box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
 	border: 1px solid blue;
 	margin: 20px;
 	display: flex;
+
 }
 
 .featureProductContainer  > div {
 	flex-grow: 1;
 	border: 1px solid red;
 	width: 100%;
+	overflow: auto;
+	margin: 20px;
+	max-height: 300px;
 }
 
 .featureProductContainer .imageContainer {
@@ -247,7 +251,7 @@ box-shadow: 1px 1px 6px -2px rgba(43,114,196,1);
 }
 
 .featureProductContainer .imageContainerInner {
-
+	
 }
 
 .featureProductContainer .imageContainerInner img {
