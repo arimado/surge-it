@@ -20,6 +20,9 @@ $(document).ready(function() {
         });
     }
 
+    // getCurrentTrend()
+    // decides whether trend is inreasing or decreasing based on a threshold
+
     var getCurrentTrend = function (data) {
         var orderCount = data.length;
         var trendMessage = '';
