@@ -279,8 +279,6 @@ $(document).ready(function(){
     $chartRadioPrice.click(function() {
         // on click destroy the chart and change the reverence for the chart
         // initialisation functions
-
-
         currentDataPoint = 'price';
         console.log(currentDataPoint);
         myDateLineChart.destroy();

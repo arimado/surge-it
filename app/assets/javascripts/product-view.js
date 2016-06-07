@@ -5,13 +5,12 @@ $(document).ready(function() {
     // -------------------------------------------------------------------------
 
     // fetch orders in last hour
-    var $trendStateDiv = $('#trendStateDiv');
+    var $trendStateDiv = $('#trendState');
     var currentProductId = $('#currentProduct').val();
     var getOrdersAPIstring = '/api/products/' + currentProductId + '/orders';
     var geProductAPIstring = '/api/products/' + currentProductId;
     var currentState = {};
     var pollInterval = 2000;
-
 
     var getPreviousDataByTime = function (data, milliseconds) {
         var dateLimit = new Date().getTime() - milliseconds;
@@ -21,6 +20,29 @@ $(document).ready(function() {
         });
     }
 
+    var getCurrentTrend = function (data) {
+        var orderCount = data.length;
+        var trendMessage = '';
+        if (orderCount > 2) {
+            trendMessage = 'INCREASING PRICE';
+            console.log(trendMessage);
+        } else {
+            trendMessage = 'DECREASING PRICE';
+            console.log(trendMessage);
+        }
+        return trendMessage;
+    }
+
+    var renderTrendState = function (value) {
+        $trendStateDiv.text(value);
+    }
+
+    var pollHandler = function (newState) {
+        var ordersInPast = getPreviousDataByTime(newState, 8000);
+        var currentTrend = getCurrentTrend(ordersInPast);
+        renderTrendState(currentTrend);
+    }
+
     var orderPoll = function() {
         setTimeout(function() {
             $.ajax({
@@ -28,7 +50,7 @@ $(document).ready(function() {
                   dataType: 'json',
                   cache: false,
                   success: function(newState) {
-                        console.log(getPreviousDataByTime(newState, 5000));
+                        pollHandler(newState);
                         orderPoll()
                   },
                   error: function(xhr, status, err) {
