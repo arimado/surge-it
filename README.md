@@ -2,8 +2,5 @@
 
 Shopify with surge pricing.
 
-Make sure you have these
-
-```
-$ gem install foreman
-```
+Have these gems installed on your machine:
+- Postgres
