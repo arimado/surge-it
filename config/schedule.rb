@@ -18,3 +18,10 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+
+set :environment, "development"
+set :output, "log/cron_log.log"}
+
+every 1.minutes do
+  rake "decrease_product_prices"
+end
