@@ -19,9 +19,17 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :environment, "development"
-set :output, "log/cron_log.log"}
+set :output, "log/cron_log.log"
 
-every 1.minutes do
+
+every '* * * * * *' do
+    rake "decrease_product_prices"
+end
+
+every '1 * * * * *' do
+    rake "decrease_product_prices"
+end
+
+every :hour do
   rake "decrease_product_prices"
 end
