@@ -21,7 +21,6 @@
 
 set :output, "log/cron_log.log"
 
-
 every '* * * * * *' do
     rake "decrease_product_prices"
 end
