@@ -97,10 +97,18 @@ $(document).ready(function(){
     // end notes ...............................................................
 
 
-    var getDataInRange = function (data) {
+    var getDataInRange = function (data, start, end) {
         return data.filter(function (eachThing) {
-            return eachThing.created_at
+            var currentDate = new Date(eachThing.created_at).getTime();
+            return currentDate >= start && currentDate <= end;
         })
+    }
+
+    var getAverageInRange = function (range) {
+        if (range.length < 1) return [];
+        return range.reduce(function (current, next) {
+            return parseFloat(current.price) + parseFloat(next.price);
+        });
     }
 
     var normaliseData = function (data, interval) {
@@ -128,26 +136,23 @@ $(document).ready(function(){
 
         for ( let i = start; i < end; i += interval) {
 
-            console.log('sup')
-            console.log('i: ', i);
-            console.log('start: ', start);
-            console.log('end: ', end);
-            console.log('interval: ', interval);
+            var currentDatePoint = i - (interval/2)
+            // GET START RANGE
 
-            // // GET START RANGE
-            //
-            // if (i >= interval * 2) {
-            //     startRange = i - interval;
-            // } else {
-            //     startRange = 0;
-            // }
-            //
-            // // get orders in current range
-            //
+            if (i >= interval * 2) {
+                startRange = i - interval;
+            } else {
+                startRange = 0;
+            }
+
+            var range = getDataInRange(data, startRange, i);
+            var average = getAverageInRange(range);
+
+            console.log('average: ', average);
+
+            // get orders in current range
             // console.log(startRange);
         }
-
-        // debugger;
 
     }
 
@@ -155,7 +160,7 @@ $(document).ready(function(){
         var args = Array.prototype.slice.call(arguments);
         var dataPoints = args.slice(1, args.length);
         // Normalise data here
-        normaliseData(data, 1000)
+        normaliseData(data, 49000)
         dataPoints.forEach(function(dataPoint, index) {
             mapDatesAndPrices(data, dataPoint).forEach(function(price){
                 myDateLineChart.datasets[index].addPoint(price.x, price.y);
