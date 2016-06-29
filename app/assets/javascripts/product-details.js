@@ -105,10 +105,13 @@ $(document).ready(function(){
     }
 
     var getAverageInRange = function (range) {
-        if (range.length < 1) return [];
-        return range.reduce(function (current, next) {
-            return parseFloat(current.price) + parseFloat(next.price);
-        });
+
+        if (range < 0) return 0;
+        return range.map(function (order) {
+            return parseFloat(order.price)
+        }).reduce(function (current, next) {
+            return current + next;
+        }, 0);
     }
 
     var normaliseData = function (data, interval) {
@@ -146,8 +149,10 @@ $(document).ready(function(){
             }
 
             var range = getDataInRange(data, startRange, i);
-            var average = getAverageInRange(range);
 
+            console.log('range: ', range);
+
+            var average = getAverageInRange(range);
             console.log('average: ', average);
 
             // get orders in current range
