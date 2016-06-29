@@ -71,8 +71,6 @@ $(document).ready(function(){
     // -------------------------------------------------------------------------
 
     var mapDatesAndPrices = function (data, value) {
-        var normalisedData = normaliseData(data, 49000)
-        debugger;
         return data.map(function(item) {
                 result = {};
                 result.x = new Date(item.created_at);
@@ -118,7 +116,7 @@ $(document).ready(function(){
 
         return {
             x: new Date(time),
-            y: avgPrice
+            y: avgPrice,
         }
     }
 
@@ -172,9 +170,16 @@ $(document).ready(function(){
         var args = Array.prototype.slice.call(arguments);
         var dataPoints = args.slice(1, args.length);
         dataPoints.forEach(function(dataPoint, index) {
-            mapDatesAndPrices(data, dataPoint).forEach(function(price){
+
+            // mapDatesAndPrices(data, dataPoint).forEach(function(price){
+            //     myDateLineChart.datasets[index].addPoint(price.x, price.y);
+            // })
+
+            normaliseData(data).forEach(function(price){
                 myDateLineChart.datasets[index].addPoint(price.x, price.y);
             })
+
+
         });
     }
 
