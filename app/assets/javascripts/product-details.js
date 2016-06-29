@@ -105,8 +105,7 @@ $(document).ready(function(){
     }
 
     var getAverageInRange = function (range) {
-
-        if (range < 0) return 0;
+        if (range.length <= 0) return null;
         return range.map(function (order) {
             return parseFloat(order.price)
         }).reduce(function (current, next) {
@@ -137,6 +136,8 @@ $(document).ready(function(){
 
         var startRange;
 
+        var prevAverage = null;
+
         for ( let i = start; i < end; i += interval) {
 
             var currentDatePoint = i - (interval/2)
@@ -153,7 +154,16 @@ $(document).ready(function(){
             console.log('range: ', range);
 
             var average = getAverageInRange(range);
+            if(average === null){
+                console.log('setting to prevAverage')
+                average = prevAverage;
+            }
             console.log('average: ', average);
+            prevAverage = average;
+
+
+
+
 
             // get orders in current range
             // console.log(startRange);
