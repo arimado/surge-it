@@ -104,13 +104,20 @@ $(document).ready(function(){
         })
     }
 
-    var getAverageInRange = function (range) {
+    var getAverageInRange = function (range, time) {
+
         if (range.length <= 0) return null;
-        return range.map(function (order) {
+
+        var avgPrice = range.map(function (order) {
             return parseFloat(order.price)
         }).reduce(function (current, next) {
             return current + next;
         }, 0);
+
+        return {
+            x: new Date(time),
+            y: avgPrice
+        }
     }
 
     var normaliseData = function (data, interval) {
@@ -127,15 +134,13 @@ $(document).ready(function(){
             // if not
                 // then just do the final point on that interval
 
+        var results = [];
+
         var intervalCounter = interval
-
-
         var start =  new Date(data[0].created_at).getTime();
         var end = new Date(data[data.length - 1].created_at).getTime()
         var range = end - start;
-
         var startRange;
-
         var prevAverage = null;
 
         for ( let i = start; i < end; i += interval) {
@@ -150,32 +155,22 @@ $(document).ready(function(){
             }
 
             var range = getDataInRange(data, startRange, i);
-
-            console.log('range: ', range);
-
-            var average = getAverageInRange(range);
+            var average = getAverageInRange(range, i);
             if(average === null){
-                console.log('setting to prevAverage')
                 average = prevAverage;
             }
-            console.log('average: ', average);
+            results.push(average);
             prevAverage = average;
-
-
-
-
-
-            // get orders in current range
-            // console.log(startRange);
         }
 
+        return results;
     }
 
     var setInitialDataOnChart = function (data) {
         var args = Array.prototype.slice.call(arguments);
         var dataPoints = args.slice(1, args.length);
         // Normalise data here
-        normaliseData(data, 49000)
+        console.log(normaliseData(data, 49000))
         dataPoints.forEach(function(dataPoint, index) {
             mapDatesAndPrices(data, dataPoint).forEach(function(price){
                 myDateLineChart.datasets[index].addPoint(price.x, price.y);
