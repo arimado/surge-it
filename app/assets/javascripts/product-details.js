@@ -96,14 +96,72 @@ $(document).ready(function(){
 
     // end notes ...............................................................
 
+
+    var getDataInRange = function (data) {
+        return data.filter(function (eachThing) {
+            return eachThing.created_at
+        })
+    }
+
+    var normaliseData = function (data, interval) {
+
+        // within each interval you need to get the average of all points
+        // so have three things for each interval
+            // end number
+            // middle number (where you place average)
+            // start number
+
+        //the timeRange
+            // how much intervals fit in this?
+            // probs do a loop and do a check if time range is still greater
+            // if not
+                // then just do the final point on that interval
+
+        var intervalCounter = interval
+
+
+        var start =  new Date(data[0].created_at).getTime();
+        var end = new Date(data[data.length - 1].created_at).getTime()
+        var range = end - start;
+
+        var startRange;
+
+        for ( let i = start; i < end; i += interval) {
+
+            console.log('sup')
+            console.log('i: ', i);
+            console.log('start: ', start);
+            console.log('end: ', end);
+            console.log('interval: ', interval);
+
+            // // GET START RANGE
+            //
+            // if (i >= interval * 2) {
+            //     startRange = i - interval;
+            // } else {
+            //     startRange = 0;
+            // }
+            //
+            // // get orders in current range
+            //
+            // console.log(startRange);
+        }
+
+        // debugger;
+
+    }
+
     var setInitialDataOnChart = function (data) {
         var args = Array.prototype.slice.call(arguments);
         var dataPoints = args.slice(1, args.length);
+        // Normalise data here
+        normaliseData(data, 1000)
         dataPoints.forEach(function(dataPoint, index) {
             mapDatesAndPrices(data, dataPoint).forEach(function(price){
                 myDateLineChart.datasets[index].addPoint(price.x, price.y);
             })
         });
+
     }
 
     var findNewData = function(currentState, newState) {
