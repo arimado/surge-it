@@ -71,12 +71,14 @@ $(document).ready(function(){
     // -------------------------------------------------------------------------
 
     var mapDatesAndPrices = function (data, value) {
+        var normalisedData = normaliseData(data, 49000)
+        debugger;
         return data.map(function(item) {
                 result = {};
                 result.x = new Date(item.created_at);
                 result.y = parseFloat(item[value]);
                 return result;
-            })
+        })
     };
 
     // setInitialDataOnChart(data, string1, string2 ...)
@@ -169,14 +171,11 @@ $(document).ready(function(){
     var setInitialDataOnChart = function (data) {
         var args = Array.prototype.slice.call(arguments);
         var dataPoints = args.slice(1, args.length);
-        // Normalise data here
-        console.log(normaliseData(data, 49000))
         dataPoints.forEach(function(dataPoint, index) {
             mapDatesAndPrices(data, dataPoint).forEach(function(price){
                 myDateLineChart.datasets[index].addPoint(price.x, price.y);
             })
         });
-
     }
 
     var findNewData = function(currentState, newState) {
@@ -393,9 +392,9 @@ $(document).ready(function(){
              console.log(data);
              setInitialDataOnChart(data, 'price');
              updateOrderDash(data, data);
-
              myDateLineChart.update();
              currentState = data;
+            //  debugger;
           },
           error: function(xhr, status, err) {
           }
