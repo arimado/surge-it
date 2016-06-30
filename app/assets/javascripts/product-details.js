@@ -106,8 +106,6 @@ $(document).ready(function(){
 
     var getAverageInRange = function (range, time) {
 
-        console.log('getAverageInRange');
-
         if (range.length <= 0) return null;
 
         var avgPrice = range.map(function (order) {
@@ -120,8 +118,6 @@ $(document).ready(function(){
             x: new Date(time),
             y: avgPrice,
         }
-
-        console.log(priceTime);
 
         return priceTime
     }
@@ -152,11 +148,11 @@ $(document).ready(function(){
 
         for ( let i = start; i < end; i += interval) {
 
-            console.log('loop');
-            console.log('i: ', i)
-            console.log('start: ', i)
-            console.log('end: ', i)
-            console.log('interval: ', i)
+            // console.log('loop');
+            // console.log('i: ', i)
+            // console.log('start: ', i)
+            // console.log('end: ', i)
+            // console.log('interval: ', i)
 
             var currentDatePoint = i - (interval/2)
             // GET START RANGE
@@ -176,6 +172,8 @@ $(document).ready(function(){
             prevAverage = average;
         }
 
+        console.log('normalised data', results);
+
         return results;
     }
 
@@ -188,7 +186,7 @@ $(document).ready(function(){
             //     myDateLineChart.datasets[index].addPoint(price.x, price.y);
             // })
 
-            normaliseData(data, 2000).forEach(function(price){
+            normaliseData(data, 70000).forEach(function(price){
                 myDateLineChart.datasets[index].addPoint(price.x, price.y);
             })
 
