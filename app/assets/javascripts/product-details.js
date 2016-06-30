@@ -108,7 +108,6 @@ $(document).ready(function(){
 
         // if there is no data
         if (range.length <= 0) {
-            console.log('no data found')
             return null;
         }
 
@@ -122,25 +121,10 @@ $(document).ready(function(){
             x: new Date(interval),
             y: avgPrice,
         }
-
-        console.log('creating average')
-
         return priceTime
     }
 
     var normaliseData = function (data, interval) {
-
-        // within each interval you need to get the average of all points
-        // so have three things for each interval
-            // end number
-            // middle number (where you place average)
-            // start number
-
-        //the timeRange
-            // how much intervals fit in this?
-            // probs do a loop and do a check if time range is still greater
-            // if not
-                // then just do the final point on that interval
 
         var results = [];
 
@@ -153,7 +137,6 @@ $(document).ready(function(){
 
         // loop
         // this will loop through each interval
-
         for ( let i = start; i < end; i += interval) {
 
             var currentDatePoint = i - (interval/2)
@@ -166,22 +149,20 @@ $(document).ready(function(){
             }
 
             var range = getDataInRange(data, startRange, i);
-            // console.log('data to normalise: ', range);
+
             var average = getAverageInRange(range, i, currentDatePoint);
+
+
             if ( average === null ){
                 prevAverage.x = new Date(currentDatePoint);
                 average = prevAverage;
             }
 
-            console.log(average);
+            console.log(average.x);
             results.push(average);
-            // console.log('results before: ', results)
+
             prevAverage = average;
-            // console.log('results after: ', results)
-
         }
-
-        // console.log('normalised data', results);
 
         return results;
     }
