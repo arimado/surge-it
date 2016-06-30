@@ -104,9 +104,13 @@ $(document).ready(function(){
         })
     }
 
-    var getAverageInRange = function (range, time) {
+    var getAverageInRange = function (range, time, interval) {
 
-        if (range.length <= 0) return null;
+        // if there is no data
+        if (range.length <= 0) {
+            console.log('no data found')
+            return null;
+        }
 
         var avgPrice = range.map(function (order) {
             return parseFloat(order.price)
@@ -115,9 +119,11 @@ $(document).ready(function(){
         }, 0);
 
         priceTime = {
-            x: new Date(time),
+            x: new Date(interval),
             y: avgPrice,
         }
+
+        console.log('creating average')
 
         return priceTime
     }
@@ -138,21 +144,17 @@ $(document).ready(function(){
 
         var results = [];
 
-        var intervalCounter = interval
-
         var start =  new Date(data[0].created_at).getTime();
         var end = new Date(data[data.length - 1].created_at).getTime()
         var range = end - start;
         var startRange;
         var prevAverage = null;
 
-        for ( let i = start; i < end; i += interval) {
 
-            // console.log('loop');
-            // console.log('i: ', i)
-            // console.log('start: ', i)
-            // console.log('end: ', i)
-            // console.log('interval: ', i)
+        // loop
+        // this will loop through each interval
+
+        for ( let i = start; i < end; i += interval) {
 
             var currentDatePoint = i - (interval/2)
             // GET START RANGE
@@ -164,15 +166,22 @@ $(document).ready(function(){
             }
 
             var range = getDataInRange(data, startRange, i);
-            var average = getAverageInRange(range, i);
+            // console.log('data to normalise: ', range);
+            var average = getAverageInRange(range, i, currentDatePoint);
             if ( average === null ){
+                prevAverage.x = new Date(currentDatePoint);
                 average = prevAverage;
             }
+
+            console.log(average);
             results.push(average);
+            // console.log('results before: ', results)
             prevAverage = average;
+            // console.log('results after: ', results)
+
         }
 
-        console.log('normalised data', results);
+        // console.log('normalised data', results);
 
         return results;
     }
@@ -186,10 +195,9 @@ $(document).ready(function(){
             //     myDateLineChart.datasets[index].addPoint(price.x, price.y);
             // })
 
-            normaliseData(data, 70000).forEach(function(price){
+            normaliseData(data, 9080000).forEach(function(price){
                 myDateLineChart.datasets[index].addPoint(price.x, price.y);
             })
-
 
         });
     }
@@ -404,8 +412,6 @@ $(document).ready(function(){
           dataType: 'json',
           cache: false,
           success: function(data) {
-             console.log('success')
-             console.log(data);
              setInitialDataOnChart(data, 'price');
              updateOrderDash(data, data);
              myDateLineChart.update();
