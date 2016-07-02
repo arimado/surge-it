@@ -96,6 +96,16 @@ $(document).ready(function(){
 
     // end notes ...............................................................
 
+
+
+    var duplicateObject = (object) => {
+        var obj = {}
+        for (var key in object) {
+            obj[key] = object[key]
+        }
+        return obj;
+    }
+
     // getDataInRange()
     // return an array of obejcts between the start & end dates
 
@@ -136,7 +146,7 @@ $(document).ready(function(){
 
     var normaliseData = function (data, interval) {
 
-        console.log('Data to normalise', data);
+        // console.log('Data to normalise', data);
 
         var results = [];
 
@@ -154,30 +164,31 @@ $(document).ready(function(){
             var currentDatePoint = i - (interval/2)
             // GET START RANGE
 
+            // gets start range
             if (i >= interval * 2) {
                 startRange = i - interval;
             } else {
                 startRange = 0;
             }
 
-            var range = getDataInRange(data, startRange, i);
-
-            var average = getAverageInRange(range, i, currentDatePoint);
-
+            var currentDataInRange = getDataInRange(data, startRange, i);
+            var average = getAverageInRange(currentDataInRange, i, currentDatePoint);
 
             if ( average === null ){
                 prevAverage.x = new Date(currentDatePoint);
                 average = prevAverage;
             }
 
-            // console.log(average);
-            console.log(average.x)
+
             results.push(average);
 
-            prevAverage = average;
+            prevAverage = duplicateObject(average);
         }
 
         return results;
+
+
+
     }
 
     var setInitialDataOnChart = function (data) {
@@ -189,9 +200,12 @@ $(document).ready(function(){
             //     myDateLineChart.datasets[index].addPoint(price.x, price.y);
             // })
 
-            normaliseData(data, 90000).forEach(function(price){
-                myDateLineChart.datasets[index].addPoint(price.x, price.y);
+            normaliseData(data, 90000)
+                .forEach(function(price){
+                    // console.log(price.x)
+                    myDateLineChart.datasets[index].addPoint(price.x, price.y);
             });
+
         });
     }
 
@@ -409,7 +423,6 @@ $(document).ready(function(){
              updateOrderDash(data, data);
              myDateLineChart.update();
              currentState = data;
-            //  debugger;
           },
           error: function(xhr, status, err) {
           }
