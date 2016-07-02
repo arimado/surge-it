@@ -46,8 +46,28 @@ $(document).ready(function(){
         }
     ];
 
+    var startingData = {
+      labels: [1, 2, 3, 4, 5, 6, 7],
+      datasets: [
+          {
+              fillColor: "rgba(220,220,220,0.2)",
+              strokeColor: "rgba(220,220,220,1)",
+              pointColor: "rgba(220,220,220,1)",
+              pointStrokeColor: "#fff",
+              data: [65, 59, 80, 81, 56, 55, 40]
+          },
+          {
+              fillColor: "rgba(151,187,205,0.2)",
+              strokeColor: "rgba(151,187,205,1)",
+              pointColor: "rgba(151,187,205,1)",
+              pointStrokeColor: "#fff",
+              data: [28, 48, 40, 19, 86, 27, 90]
+          }
+      ]
+    }
+
     var options = {
-        bezierCurve: false,
+        bezierCurve: true,
         showTooltips: true,
         scaleShowVerticalLines: false,
         scaleShowHorizontalLines: false,
@@ -65,6 +85,7 @@ $(document).ready(function(){
 
     var ctx = document.getElementById("productChart").getContext("2d");
     myDateLineChart = new Chart(ctx).Scatter(chartData, options);
+    // myDateLineChart = new Chart(ctx).Line(startingData, {animationSteps: 15});
 
     // -------------------------------------------------------------------------
     // CHART FUNCTIONS ---------------------------------------------------------
@@ -95,8 +116,6 @@ $(document).ready(function(){
     // want
 
     // end notes ...............................................................
-
-
 
     var duplicateObject = (object) => {
         var obj = {}
@@ -179,9 +198,7 @@ $(document).ready(function(){
                 average = prevAverage;
             }
 
-
             results.push(average);
-
             prevAverage = duplicateObject(average);
         }
 
@@ -200,7 +217,7 @@ $(document).ready(function(){
             //     myDateLineChart.datasets[index].addPoint(price.x, price.y);
             // })
 
-            normaliseData(data, 90000)
+            normaliseData(data, 100000)
                 .forEach(function(price){
                     // console.log(price.x)
                     myDateLineChart.datasets[index].addPoint(price.x, price.y);
