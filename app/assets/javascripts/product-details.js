@@ -217,7 +217,7 @@ $(document).ready(function(){
             //     myDateLineChart.datasets[index].addPoint(price.x, price.y);
             // })
 
-            normaliseData(data, 100000)
+            normaliseData(data, 40000)
                 .forEach(function(price){
                     // console.log(price.x)
                     myDateLineChart.datasets[index].addPoint(price.x, price.y);
