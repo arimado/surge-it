@@ -187,7 +187,8 @@ $(document).ready(function(){
         var avgPrice = range.map(function (order) {
             return parseFloat(order.price)
         }).reduce(function (current, next) {
-            return current + next;
+            if ( current > next ) return current;
+            return next;
         }, 0);
 
         priceTime = {
@@ -266,7 +267,7 @@ $(document).ready(function(){
             // mapDatesAndPrices(data, dataPoint).forEach(function(price){
             //     myDateLineChart.datasets[index].addPoint(price.x, price.y);
             // })
-            normaliseData(data, 90000)
+            normaliseData(data, 100000)
                 .forEach(function(price){
                     // console.log(price.x)
                     myDateLineChart.datasets[index].addPoint(price.x, price.y);
