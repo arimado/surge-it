@@ -1,6 +1,8 @@
 console.log('loaded: product-details.js');
 
 var myDateLineChart;
+var currentState = {};
+var currentNormalisedState = [];
 
 var updatePointOnChart = function(chart, index, value) {
     // chart.datasets[index].
@@ -37,7 +39,7 @@ $(document).ready(function(){
     // GLOBALS -----------------------------------------------------------------
     // -------------------------------------------------------------------------
 
-    var currentState = {};
+
     var currentDataPoint = '';
 
     var currentProductId = $('#currentProduct').val();
@@ -179,8 +181,6 @@ $(document).ready(function(){
 
     var getHighestInRange = function (range, interval, datePoint) {
 
-        console.log('range to average: ', range);
-
         // if there is no data
         if (range.length <= 0) {
             return null;
@@ -189,8 +189,6 @@ $(document).ready(function(){
         var avgPrice = range.map(function (order) {
             return parseFloat(order.price)
         }).reduce(function (current, next) {
-            console.log('current: ', current);
-            console.log('next: ', next);
             if ( current > next ) return current;
             return next;
         }, 0);
@@ -264,7 +262,6 @@ $(document).ready(function(){
         // loop through the intervals till then and now
 
         var lastOrder = results[results.length - 1];
-
         for (var i = lastOrder.x.getTime(); i < Date.now(); i += interval ) {
 
             let currentDatePoint =
@@ -286,64 +283,88 @@ $(document).ready(function(){
         return results;
     }
 
-    var setInitialDataOnChart = function (data) {
+    var setInitialDataOnChart = function (data, chart) {
+
+        var normalisedData = [];
+
         var args = Array.prototype.slice.call(arguments);
-        var dataPoints = args.slice(1, args.length);
+        var dataPoints = args.slice(2, args.length);
         dataPoints.forEach(function(dataPoint, index) {
 
             // mapDatesAndPrices(data, dataPoint).forEach(function(price){
             //     myDateLineChart.datasets[index].addPoint(price.x, price.y);
             // })
-            normaliseData(data, 100000)
-                .forEach(function(price){
-                    // console.log(price.x)
-                    myDateLineChart.datasets[index].addPoint(price.x, price.y);
+
+            var currentData = {}
+
+            currentData.index = index;
+            currentData.dataPoint = dataPoint;
+            currentData.data = normaliseData(data, 100000);
+
+            currentData.data.forEach(function(price){
+                chart.datasets[index].addPoint(price.x, price.y);
             });
 
+            normalisedData.push(currentData);
         });
+
+        return normalisedData;
     }
 
     var findNewData = function(currentState, newState) {
         var newValues = [];
         if (newState.length > currentState.length) {
             newValues = newState.slice(currentState.length, newState.length);
+            console.log('new Values found: ', newValues)
         }
         return newValues;
     }
 
-    var updateDataOnChart = function (newData, dataset) {
-        // I need to somehow put the updated order in the range
-        // im thinking just like keep the ranges themselves within each object
-        // then loop through the current reduced objects
-        // if the new data has a timecode within that range
-        // shove it in the range
-            // shove it in by wether the price is higher or lower
-            // just change it
-            // then update it
+    var updateDataOnChart = function (newData, normalisedData, chart) {
 
-        // For each new peice of data
-        // check against all ranges in currentdataset
-        // if within, size it up and update the range
 
-        // if multiple data falls within the dataset, you will have to get the
-        // highest of them all
 
-        // get the index of that peice of data?
 
-        dataset.forEach(function (data) {
+        if (newData.length > 0) {
 
-        })
+            debugger;
 
-        newDataset.forEach(function (newData){
+            // store string params in dataPoints
+            var args = Array.prototype.slice.call(arguments);
+            var dataPoints = args.slice(3, args.length);
 
-            var currentTtime 
-        })
+            dataPoints.forEach(function(dataPoint, index) {
 
+                console.log('----- start datapoint (', dataPoint, ') --------')
+
+                newData.forEach(function (data) {
+                    console.log('current new data ', data)
+                    // find out if it is wiithin range
+                    // loop through
+
+                    normalisedData.forEach(function (normalData) {
+                        if (normalData.dataPoint !== dataPoint) return;
+                        normalData.data.forEach(function(order) {
+                            console.log('order data', order);
+                        })
+                    })
+
+                });
+
+                console.log('----- end datapoint (', dataPoint, ') --------')
+            });
+
+
+            chart.update();
+            return newData;
+        } else {
+            return currentState;
+        }
 
 
     }
 
-    var setNewDataOnChart = function(newData, chart) {
+    var setNewDataOnChart = function(newData, chart /* , [followed by datapoint stirngs] */) {
 
         if (newData.length > 0) {
             // store string params in dataPoints
@@ -473,7 +494,10 @@ $(document).ready(function(){
                   cache: false,
                   success: function(newState) {
                         var newData = findNewData(currentState, newState);
-                        setNewDataOnChart(newData, myDateLineChart, 'price');
+                        // setNewDataOnChart(newData, myDateLineChart, 'price');
+
+
+                        updateDataOnChart(newData, currentNormalisedState, myDateLineChart, 'price');
                         if (newData.length > 0) {
                             updateOrderDash(currentState, newState);
                             currentState = newState;
@@ -542,7 +566,7 @@ $(document).ready(function(){
           dataType: 'json',
           cache: false,
           success: function(data) {
-             setInitialDataOnChart(data, 'price');
+             currentNormalisedState = setInitialDataOnChart(data, myDateLineChart, 'price');
              updateOrderDash(data, data);
              myDateLineChart.update();
              currentState = data;
