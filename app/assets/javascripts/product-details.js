@@ -236,12 +236,15 @@ $(document).ready(function(){
             }
 
             var currentDataInRange = getDataInRange(data, startRange, i);
-            var average = getHighestInRange(currentDataInRange, i, currentDatePoint);
+            var average = getHighestInRange(currentDataInRange, interval, currentDatePoint);
 
             if ( average === null ){
                 // if the average null
                 // add the previous attributes
                 // but update the ranges and time
+
+                console.log('duping');
+
                 prevAverage = duplicateObject( prevAverage, {
                     x: new Date(currentDatePoint),
                     startRange: currentDatePoint - (interval / 2),
@@ -250,6 +253,10 @@ $(document).ready(function(){
 
                 average = prevAverage;
             }
+
+            var currentDifference = average.endRange - average.startRange;
+
+             console.log('currentDifference: ', currentDifference)
 
             results.push(average);
             prevAverage = duplicateObject(average);
@@ -353,7 +360,7 @@ $(document).ready(function(){
                                 && order.endRange >= currentTime  ) {
                                 console.log('@@@match: ', order.x,
                                             'difference: ', order.endRange - order.startRange);
-                                debugger;
+
                             } else {
                                 console.log('not match: ', order.x,
                                             'difference: ', order.endRange - order.startRange);
