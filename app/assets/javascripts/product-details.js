@@ -1,5 +1,15 @@
 console.log('loaded: product-details.js');
 
+var myDateLineChart;
+
+var updatePointOnChart = function(chart, index, value) {
+    // chart.datasets[index].
+    // debugger;
+    var lastPointIndex = chart.datasets[index].points.length;
+    chart.datasets[index].points[lastPointIndex - 1].value = value;
+    chart.update();
+}
+
 $(document).ready(function(){
 
     // -------------------------------------------------------------------------
@@ -69,8 +79,8 @@ $(document).ready(function(){
     var options = {
         bezierCurve: true,
         showTooltips: true,
-        scaleShowVerticalLines: false,
-        scaleShowHorizontalLines: false,
+        scaleShowVerticalLines: true,
+        scaleShowHorizontalLines: true,
         scaleShowLabels: true,
         scaleType: "date",
         scaleLabel: "$<%=value%>",
@@ -81,7 +91,7 @@ $(document).ready(function(){
         fill: true
     }
 
-    var myDateLineChart;
+
 
     var ctx = document.getElementById("productChart").getContext("2d");
     myDateLineChart = new Chart(ctx).Scatter(chartData, options);
@@ -153,7 +163,7 @@ $(document).ready(function(){
         }, 0);
 
         priceTime = {
-            x: new Date(interval),
+            x: new Date(time),
             y: avgPrice,
         }
         return priceTime
@@ -180,7 +190,7 @@ $(document).ready(function(){
         // this will loop through each interval
         for ( let i = start; i < end; i += interval) {
 
-            var currentDatePoint = i - (interval/2)
+            var currentDatePoint = i - (interval/2);
             // GET START RANGE
 
             // gets start range
@@ -201,11 +211,8 @@ $(document).ready(function(){
             results.push(average);
             prevAverage = duplicateObject(average);
         }
-
+        console.log(results);
         return results;
-
-
-
     }
 
     var setInitialDataOnChart = function (data) {
@@ -216,7 +223,6 @@ $(document).ready(function(){
             // mapDatesAndPrices(data, dataPoint).forEach(function(price){
             //     myDateLineChart.datasets[index].addPoint(price.x, price.y);
             // })
-
             normaliseData(data, 40000)
                 .forEach(function(price){
                     // console.log(price.x)
@@ -234,18 +240,19 @@ $(document).ready(function(){
         return newValues;
     }
 
-
     // set data on chart
 
     var setNewDataOnChart = function(newData, chart) {
+
         if (newData.length > 0) {
+            // store string params in dataPoints
             var args = Array.prototype.slice.call(arguments);
             var dataPoints = args.slice(2, args.length);
             dataPoints.forEach(function(dataPoint, index) {
                 mapDatesAndPrices(newData, dataPoint).forEach(function(price){
                     chart.datasets[index].addPoint(price.x, price.y);
-                })
-            })
+                });
+            });
             chart.update();
             return newData;
         } else {
@@ -298,9 +305,8 @@ $(document).ready(function(){
             .animateNumber(
                 {
                     number: targetNumber,
-                    numberStep: numberStepFunc
-                },
-                interval
+                    numberStep: numberStepFunc,
+                }
             );
     }
 
@@ -405,7 +411,6 @@ $(document).ready(function(){
         myDateLineChart = new Chart(ctx).Scatter(chartData, options);
         setNewDataOnChart(currentState, myDateLineChart, currentDataPoint);
         console.log(myDateLineChart);
-
     });
 
     $chartRadioRevenue.click(function() {
