@@ -173,11 +173,11 @@ $(document).ready(function(){
         })
     }
 
-    // getAverageInRange()
+    // getHighestInRange()
     // reduces a range of objects into a single object
     // id there are no obects passed in it returns null
 
-    var getAverageInRange = function (range, time, interval) {
+    var getHighestInRange = function (range, time, interval) {
 
         // if there is no data
         if (range.length <= 0) {
@@ -195,6 +195,7 @@ $(document).ready(function(){
             x: new Date(time),
             y: avgPrice,
         }
+
         return priceTime
     }
 
@@ -231,7 +232,7 @@ $(document).ready(function(){
             }
 
             var currentDataInRange = getDataInRange(data, startRange, i);
-            var average = getAverageInRange(currentDataInRange, i, currentDatePoint);
+            var average = getHighestInRange(currentDataInRange, i, currentDatePoint);
 
             if ( average === null ){
                 prevAverage.x = new Date(currentDatePoint);
