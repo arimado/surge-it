@@ -200,7 +200,6 @@ $(document).ready(function(){
             y: avgPrice,
             startRange: datePoint - (interval / 2),
             endRange: datePoint + (interval / 2),
-
         }
 
         return mostExpensiveOrder;
@@ -242,7 +241,15 @@ $(document).ready(function(){
             var average = getHighestInRange(currentDataInRange, i, currentDatePoint);
 
             if ( average === null ){
-                prevAverage.x = new Date(currentDatePoint);
+                // if the average null
+                // add the previous attributes
+                // but update the ranges and time
+                prevAverage = duplicateObject( prevAverage, {
+                    x: new Date(currentDatePoint),
+                    startRange: currentDatePoint - (interval / 2),
+                    endRange: currentDatePoint + (interval / 2),
+                });
+
                 average = prevAverage;
             }
 
@@ -259,7 +266,14 @@ $(document).ready(function(){
         var lastOrder = results[results.length - 1];
 
         for (var i = lastOrder.x.getTime(); i < Date.now(); i += interval ) {
-            results.push(duplicateObject(lastOrder, {x: new Date(i)}));
+
+            let currentDatePoint =
+
+            results.push(duplicateObject(lastOrder, {
+                    x: new Date(i),
+                    startRange: (i - (interval / 2)) - (interval / 2),
+                    endRange: (i - (interval / 2)) + (interval / 2),
+            }));
         }
 
         results.forEach(
