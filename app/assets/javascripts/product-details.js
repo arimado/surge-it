@@ -340,19 +340,23 @@ $(document).ready(function(){
 
                 newData.forEach(function (data) {
                     console.log('current new data ', data)
+                    console.log('time: ', new Date(data.created_at));
                     // find out if it is wiithin range
                     // loop through
-
                     var currentTime = new Date(data.created_at).getTime();
 
                     normalisedData.forEach(function (normalData) {
                         if (normalData.dataPoint !== dataPoint) return;
                         normalData.data.forEach(function(order, index) {
+
                             if ( currentTime >= order.startRange
                                 && order.endRange >= currentTime  ) {
-
-                                    console.log('match: ', order)
-
+                                console.log('@@@match: ', order.x,
+                                            'difference: ', order.endRange - order.startRange);
+                                debugger;
+                            } else {
+                                console.log('not match: ', order.x,
+                                            'difference: ', order.endRange - order.startRange);
                             }
                         })
                     })
