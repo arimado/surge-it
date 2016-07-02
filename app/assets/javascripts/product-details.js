@@ -96,6 +96,8 @@ $(document).ready(function(){
 
     // end notes ...............................................................
 
+    // getDataInRange()
+    // return an array of obejcts between the start & end dates
 
     var getDataInRange = function (data, start, end) {
         return data.filter(function (eachThing) {
@@ -103,6 +105,10 @@ $(document).ready(function(){
             return currentDate >= start && currentDate <= end;
         })
     }
+
+    // getAverageInRange()
+    // reduces a range of objects into a single object
+    // id there are no obects passed in it returns null
 
     var getAverageInRange = function (range, time, interval) {
 
@@ -124,7 +130,13 @@ $(document).ready(function(){
         return priceTime
     }
 
+    // normaliseData()
+    // returns an array of data
+    // each element represent a range of data within the current interval
+
     var normaliseData = function (data, interval) {
+
+        console.log('Data to normalise', data);
 
         var results = [];
 
@@ -158,7 +170,8 @@ $(document).ready(function(){
                 average = prevAverage;
             }
 
-            console.log(average.x);
+            // console.log(average);
+            console.log(average.x)
             results.push(average);
 
             prevAverage = average;
@@ -176,10 +189,9 @@ $(document).ready(function(){
             //     myDateLineChart.datasets[index].addPoint(price.x, price.y);
             // })
 
-            normaliseData(data, 9080000).forEach(function(price){
+            normaliseData(data, 90000).forEach(function(price){
                 myDateLineChart.datasets[index].addPoint(price.x, price.y);
-            })
-
+            });
         });
     }
 
