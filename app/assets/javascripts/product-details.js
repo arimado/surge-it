@@ -243,7 +243,7 @@ $(document).ready(function(){
                 // add the previous attributes
                 // but update the ranges and time
 
-                console.log('duping');
+                // console.log('duping');
 
                 prevAverage = duplicateObject( prevAverage, {
                     x: new Date(currentDatePoint),
@@ -256,7 +256,7 @@ $(document).ready(function(){
 
             var currentDifference = average.endRange - average.startRange;
 
-             console.log('currentDifference: ', currentDifference)
+            //  console.log('currentDifference: ', currentDifference)
 
             results.push(average);
             prevAverage = duplicateObject(average);
@@ -322,7 +322,7 @@ $(document).ready(function(){
         var newValues = [];
         if (newState.length > currentState.length) {
             newValues = newState.slice(currentState.length, newState.length);
-            console.log('new Values found: ', newValues)
+            // console.log('new Values found: ', newValues)
         }
         return newValues;
     }
@@ -362,8 +362,8 @@ $(document).ready(function(){
                                             'difference: ', order.endRange - order.startRange);
 
                             } else {
-                                console.log('not match: ', order.x,
-                                            'difference: ', order.endRange - order.startRange);
+                                // console.log('not match: ', order.x,
+                                //             'difference: ', order.endRange - order.startRange);
                             }
                         })
                     })
