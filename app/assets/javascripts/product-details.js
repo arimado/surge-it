@@ -349,24 +349,26 @@ $(document).ready(function(){
                     // loop through
                     var currentTime = new Date(data.created_at).getTime();
 
+
+
                     normalisedData.forEach(function (normalData) {
                         if (normalData.dataPoint !== dataPoint) return;
-                        normalData.data.forEach(function(order, index) {
+                        console.log('normalisedData length: ', normalData.data.length);
+                        normalData.data.forEach(function(order, normIndex) {
 
                             if ( currentTime >= order.startRange
                                 && order.endRange >= currentTime  ) {
-
                                 console.log('@@match: ', order.x,
                                             'difference: ', order.endRange - order.startRange);
 
-                            } else {
-                                // console.log('not match: ', order.x,
-                                //             'difference: ', order.endRange - order.startRange);
+                                    matches.push(normIndex);
                             }
                         })
                     })
 
                 });
+
+                console.log('matches: ', matches);
 
                 console.log('----- end datapoint (', dataPoint, ') --------')
             });
