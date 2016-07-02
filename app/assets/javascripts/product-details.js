@@ -356,7 +356,7 @@ $(document).ready(function(){
                             if ( currentTime >= order.startRange
                                 && order.endRange >= currentTime  ) {
 
-                                console.log('@@@match: ', order.x,
+                                console.log('@@match: ', order.x,
                                             'difference: ', order.endRange - order.startRange);
 
                             } else {
