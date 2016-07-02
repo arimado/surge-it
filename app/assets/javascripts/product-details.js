@@ -269,23 +269,23 @@ $(document).ready(function(){
         // loop through the intervals till then and now
 
         var lastOrder = results[results.length - 1];
-        for (var i = lastOrder.x.getTime(); i < Date.now(); i += interval ) {
 
-            let currentDatePoint =
-
+        for (var i = lastOrder.x.getTime(); i < Date.now() + (interval / 2); i += interval ) {
             results.push(duplicateObject(lastOrder, {
-                    x: new Date(i),
-                    startRange: (i - (interval / 2)) - (interval / 2),
-                    endRange: (i - (interval / 2)) + (interval / 2),
+                    x: new Date(i + interval),
+                    startRange: i + (interval / 2),
+                    endRange: i + (interval / 2) * 3 ,
             }));
         }
 
-        // // SHOW RANGES
-        // results.forEach(
-        //     order => console.log('startRange: ', order.startRange,
-        //                          'endRange:', order.endRange,
-        //                          'difference: ', order.endRange - order.startRange));
+        // SHOW RANGES
+        results.forEach(
+            order => console.log('startRange: ', order.startRange,
+                                 'endRange:', order.endRange,
+                                 'difference: ', order.endRange - order.startRange));
         // results = addPresentPoint(results, interval)
+
+
 
         return results;
     }
@@ -306,7 +306,7 @@ $(document).ready(function(){
 
             currentData.index = index;
             currentData.dataPoint = dataPoint;
-            currentData.data = normaliseData(data, 100000);
+            currentData.data = normaliseData(data, 1700000);
 
             currentData.data.forEach(function(price){
                 chart.datasets[index].addPoint(price.x, price.y);
@@ -328,9 +328,6 @@ $(document).ready(function(){
     }
 
     var updateDataOnChart = function (newData, normalisedData, chart) {
-
-
-
 
         if (newData.length > 0) {
 
@@ -358,6 +355,7 @@ $(document).ready(function(){
 
                             if ( currentTime >= order.startRange
                                 && order.endRange >= currentTime  ) {
+
                                 console.log('@@@match: ', order.x,
                                             'difference: ', order.endRange - order.startRange);
 
