@@ -358,7 +358,7 @@ $(document).ready(function(){
 
                             if ( currentTime >= order.startRange
                                 && order.endRange >= currentTime  ) {
-                                console.log('@@match: ', order.x,
+                                console.log('index: ', normIndex, '@@match: ', order.x,
                                             'difference: ', order.endRange - order.startRange);
 
                                     matches.push(normIndex);
