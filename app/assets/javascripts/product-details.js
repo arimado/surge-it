@@ -276,10 +276,11 @@ $(document).ready(function(){
             }));
         }
 
-        results.forEach(
-            order => console.log('startRange: ', order.startRange,
-                                 'endRange:', order.endRange,
-                                 'difference: ', order.endRange - order.startRange));
+        // // SHOW RANGES
+        // results.forEach(
+        //     order => console.log('startRange: ', order.startRange,
+        //                          'endRange:', order.endRange,
+        //                          'difference: ', order.endRange - order.startRange));
         // results = addPresentPoint(results, interval)
 
         return results;
@@ -310,7 +311,7 @@ $(document).ready(function(){
         return newValues;
     }
 
-    var updateDataOnChart = function () {
+    var updateDataOnChart = function (newData, dataset) {
         // I need to somehow put the updated order in the range
         // im thinking just like keep the ranges themselves within each object
         // then loop through the current reduced objects
@@ -319,6 +320,26 @@ $(document).ready(function(){
             // shove it in by wether the price is higher or lower
             // just change it
             // then update it
+
+        // For each new peice of data
+        // check against all ranges in currentdataset
+        // if within, size it up and update the range
+
+        // if multiple data falls within the dataset, you will have to get the
+        // highest of them all
+
+        // get the index of that peice of data?
+
+        dataset.forEach(function (data) {
+
+        })
+
+        newDataset.forEach(function (newData){
+
+            var currentTtime 
+        })
+
+
 
     }
 
