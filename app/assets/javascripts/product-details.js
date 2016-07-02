@@ -331,19 +331,29 @@ $(document).ready(function(){
             var args = Array.prototype.slice.call(arguments);
             var dataPoints = args.slice(3, args.length);
 
+
             dataPoints.forEach(function(dataPoint, index) {
 
                 console.log('----- start datapoint (', dataPoint, ') --------')
+
+                var matches = [];
 
                 newData.forEach(function (data) {
                     console.log('current new data ', data)
                     // find out if it is wiithin range
                     // loop through
 
+                    var currentTime = new Date(data.created_at).getTime();
+
                     normalisedData.forEach(function (normalData) {
                         if (normalData.dataPoint !== dataPoint) return;
-                        normalData.data.forEach(function(order) {
-                            console.log('order data', order);
+                        normalData.data.forEach(function(order, index) {
+                            if ( currentTime >= order.startRange
+                                && order.endRange >= currentTime  ) {
+
+                                    console.log('match: ', order)
+
+                            }
                         })
                     })
 
