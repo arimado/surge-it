@@ -327,8 +327,6 @@ $(document).ready(function(){
 
         if (newData.length > 0) {
 
-            debugger;
-
             // store string params in dataPoints
             var args = Array.prototype.slice.call(arguments);
             var dataPoints = args.slice(3, args.length);
