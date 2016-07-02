@@ -179,6 +179,8 @@ $(document).ready(function(){
 
     var getHighestInRange = function (range, time, interval) {
 
+        console.log('range to average: ', range);
+
         // if there is no data
         if (range.length <= 0) {
             return null;
@@ -187,6 +189,8 @@ $(document).ready(function(){
         var avgPrice = range.map(function (order) {
             return parseFloat(order.price)
         }).reduce(function (current, next) {
+            console.log('current: ', current);
+            console.log('next: ', next);
             if ( current > next ) return current;
             return next;
         }, 0);
