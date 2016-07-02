@@ -10,6 +10,25 @@ var updatePointOnChart = function(chart, index, value) {
     chart.update();
 }
 
+var addPresentPoint = function (dataset, interval) {
+    console.log('adding present point');
+    console.log('original dataset: ', dataset);
+    var newDataset = dataset;
+    var lastDataPoint = newDataset[newDataset.length - 1]
+    var lastDate = new Date(lastDataPoint.x).getTime();
+    var presentDate = new Date(lastDate + interval);
+
+    var presentDataPoint = {
+        x:            presentDate,
+        y:            lastDataPoint.y,
+        presentPoint: true,
+    }
+    
+    newDataset.push(presentDataPoint);
+    console.log('new dataset: ', newDataset);
+    return newDataset;
+}
+
 $(document).ready(function(){
 
     // -------------------------------------------------------------------------
@@ -185,9 +204,10 @@ $(document).ready(function(){
         var startRange;
         var prevAverage = null;
 
-
         // loop
-        // this will loop through each interval
+        // this will loop through each interval and create a average for all
+        // the orders in that inerval
+
         for ( let i = start; i < end; i += interval) {
 
             var currentDatePoint = i - (interval/2);
@@ -211,7 +231,11 @@ $(document).ready(function(){
             results.push(average);
             prevAverage = duplicateObject(average);
         }
-        console.log(results);
+
+        // add presentPoint
+
+        results = addPresentPoint(results, interval)
+
         return results;
     }
 
