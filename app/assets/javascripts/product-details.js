@@ -278,7 +278,8 @@ $(document).ready(function(){
 
         results.forEach(
             order => console.log('startRange: ', order.startRange,
-                                 'endRange:', order.endRange));
+                                 'endRange:', order.endRange,
+                                 'difference: ', order.endRange - order.startRange));
         // results = addPresentPoint(results, interval)
 
         return results;
