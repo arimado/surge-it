@@ -177,7 +177,7 @@ $(document).ready(function(){
     // reduces a range of objects into a single object
     // id there are no obects passed in it returns null
 
-    var getHighestInRange = function (range, time, interval) {
+    var getHighestInRange = function (range, interval, datePoint) {
 
         console.log('range to average: ', range);
 
@@ -195,12 +195,15 @@ $(document).ready(function(){
             return next;
         }, 0);
 
-        priceTime = {
-            x: new Date(time),
+        var mostExpensiveOrder = {
+            x: new Date(datePoint),
             y: avgPrice,
+            startRange: datePoint - (interval / 2),
+            endRange: datePoint + (interval / 2),
+
         }
 
-        return priceTime
+        return mostExpensiveOrder;
     }
 
     // normaliseData()
@@ -225,7 +228,7 @@ $(document).ready(function(){
 
         for ( var i = start; i < end; i += interval) {
 
-            var currentDatePoint = i - (interval/2);
+            var currentDatePoint = i - (interval / 2);
             // GET START RANGE
 
             // gets start range
@@ -259,6 +262,9 @@ $(document).ready(function(){
             results.push(duplicateObject(lastOrder, {x: new Date(i)}));
         }
 
+        results.forEach(
+            order => console.log('startRange: ', order.startRange,
+                                 'endRange:', order.endRange));
         // results = addPresentPoint(results, interval)
 
         return results;
@@ -289,7 +295,17 @@ $(document).ready(function(){
         return newValues;
     }
 
-    // set data on chart
+    var updateDataOnChart = function () {
+        // I need to somehow put the updated order in the range
+        // im thinking just like keep the ranges themselves within each object
+        // then loop through the current reduced objects
+        // if the new data has a timecode within that range
+        // shove it in the range
+            // shove it in by wether the price is higher or lower
+            // just change it
+            // then update it
+
+    }
 
     var setNewDataOnChart = function(newData, chart) {
 
@@ -298,7 +314,7 @@ $(document).ready(function(){
             var args = Array.prototype.slice.call(arguments);
             var dataPoints = args.slice(2, args.length);
             dataPoints.forEach(function(dataPoint, index) {
-                mapDatesAndPrices(newData, dataPoint).forEach(function(price){
+                    mapDatesAndPrices(newData, dataPoint).forEach(function(price){
                     chart.datasets[index].addPoint(price.x, price.y);
                 });
             });
