@@ -148,10 +148,17 @@ $(document).ready(function(){
 
     // end notes ...............................................................
 
-    var duplicateObject = (object) => {
+    var duplicateObject = (object, customAttributes) => {
         var obj = {}
         for (var key in object) {
             obj[key] = object[key]
+        }
+        // if customAttributes object has been passed in add/replace them into
+        // the new object
+        if (customAttributes) {
+            for (var key in customAttributes) {
+                obj[key] = customAttributes[key]
+            }
         }
         return obj;
     }
@@ -243,7 +250,7 @@ $(document).ready(function(){
         var lastOrder = results[results.length - 1];
 
         for (var i = lastOrder.x.getTime(); i < Date.now(); i += interval ) {
-            console.log('creating time loop');
+            results.push(duplicateObject(lastOrder, {x: new Date(i)}));
         }
 
         // results = addPresentPoint(results, interval)
