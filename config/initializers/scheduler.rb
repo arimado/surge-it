@@ -10,8 +10,10 @@ s = Rufus::Scheduler.singleton
 
 # Stupid recurrent task...
 #
-s.every '1s' do
-
-  Rails.logger.info "hello, it's #{Time.now} ---------------"
-  Rails.logger.flush
+s.every '5s' do
+    # Reduce all product prices by a thing
+    products = Product.last
+    Rails.logger.info "hello, it's #{Time.now} ---------------"
+    Rails.logger.info "this is something #{products} ---------------"
+    Rails.logger.flush
 end
