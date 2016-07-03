@@ -19,16 +19,16 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :output, "log/cron_log.log"
-
-every '* * * * * *' do
-    rake "decrease_product_prices"
-end
-
-every '1 * * * * *' do
-    rake "decrease_product_prices"
-end
-
-every :hour do
-  rake "decrease_product_prices"
-end
+# set :output, "log/cron_log.log"
+#
+# every '* * * * * *' do
+#     rake "decrease_product_prices"
+# end
+#
+# every '1 * * * * *' do
+#     rake "decrease_product_prices"
+# end
+#
+# every :hour do
+#   rake "decrease_product_prices"
+# end

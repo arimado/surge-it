@@ -401,8 +401,10 @@ $(document).ready(function(){
                     console.log('dataset to change: ',chart.datasets[0].points[match.index]);
                     console.log('with: ', match.data);
                     var value = parseInt(match.data.price);
+
+                    // instead of just updating that value, update all next ones too?
                     chart.datasets[0].points[match.index].value = value;
-                    
+                    chart.datasets[0].points[match.index].valueLabel = '$' + value;
                 })
 
                 console.log('----- end datapoint (', dataPoint, ') --------')

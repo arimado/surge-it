@@ -34,9 +34,9 @@ gem 'bcrypt', '~> 3.1.7'
 
 # ------------------------------------------------
 
-gem 'materialize-sass'
-gem 'sidekiq'
-gem 'whenever'#, :require => false #got rid of require from example 
+# gem 'materialize-sass'
+# gem 'sidekiq'
+# gem 'whenever'#, :require => false #got rid of require from example
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
