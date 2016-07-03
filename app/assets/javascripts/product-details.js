@@ -270,7 +270,7 @@ $(document).ready(function(){
 
         var lastOrder = results[results.length - 1];
 
-        for (var i = lastOrder.x.getTime(); i < Date.now() + (interval / 2); i += interval ) {
+        for (var i = lastOrder.x.getTime(); i < Date.now(); i += interval ) {
             results.push(duplicateObject(lastOrder, {
                     x: new Date(i + interval),
                     startRange: i + (interval / 2),
@@ -349,8 +349,6 @@ $(document).ready(function(){
                     // loop through
                     var currentTime = new Date(data.created_at).getTime();
 
-
-
                     normalisedData.forEach(function (normalData) {
                         if (normalData.dataPoint !== dataPoint) return;
                         console.log('normalisedData length: ', normalData.data.length);
@@ -360,8 +358,8 @@ $(document).ready(function(){
                                 && order.endRange >= currentTime  ) {
                                 console.log('index: ', normIndex, '@@match: ', order.x,
                                             'difference: ', order.endRange - order.startRange);
-
                                     matches.push(normIndex);
+
                             }
                         })
                     })
@@ -372,8 +370,6 @@ $(document).ready(function(){
 
                 console.log('----- end datapoint (', dataPoint, ') --------')
             });
-
-
             chart.update();
             return newData;
         } else {
