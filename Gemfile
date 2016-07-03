@@ -34,7 +34,7 @@ gem 'bcrypt', '~> 3.1.7'
 
 # ------------------------------------------------
 
-# gem 'materialize-sass'
+gem 'materialize-sass'
 # gem 'sidekiq'
 # gem 'whenever'#, :require => false #got rid of require from example
 
