@@ -186,10 +186,20 @@ $(document).ready(function(){
             return null;
         }
 
+        // console.log(range);
+
         var avgPrice = range.map(function (order) {
+            // console.log('mapped: ', order);
             return parseFloat(order.price)
         }).reduce(function (current, next) {
-            if ( current > next ) return current;
+
+            // console.log('current: ', current, 'next: ', next);
+
+            if ( current > next ) {
+                // console.log('highest: ', current);
+                return current;
+            }
+            // console.log('highest: ', next);
             return next;
         }, 0);
 
@@ -335,7 +345,6 @@ $(document).ready(function(){
     }
 
     var updateDataOnChart = function (newData, normalisedData, chart) {
-
         if (newData.length > 0) {
 
             // store string params in dataPoints
@@ -368,10 +377,8 @@ $(document).ready(function(){
 
                                     matches.push({
                                         index: normIndex,
-                                        data: newData,
+                                        data: data,
                                     });
-
-
                             }
                         })
                     })
@@ -381,13 +388,21 @@ $(document).ready(function(){
                 console.log('matches: ', matches);
 
                 matches.forEach(function (match) {
+
                     // update the correct dataset
                     // would that be data points?
 
                     // update the currentData state
                     // then use that reference to that datastate to change the graph
 
+                    // update the point at index match.index
+                    // with match.data
 
+                    console.log('dataset to change: ',chart.datasets[0].points[match.index]);
+                    console.log('with: ', match.data);
+                    var value = parseInt(match.data.price);
+                    chart.datasets[0].points[match.index].value = value;
+                    
                 })
 
                 console.log('----- end datapoint (', dataPoint, ') --------')
