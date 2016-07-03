@@ -225,6 +225,9 @@ $(document).ready(function(){
 
         for ( var i = start; i < end; i += interval) {
 
+            console.log('looping');
+
+
             var currentDatePoint = i - (interval / 2);
             // GET START RANGE
 
@@ -239,6 +242,7 @@ $(document).ready(function(){
             var average = getHighestInRange(currentDataInRange, interval, currentDatePoint);
 
             if ( average === null ){
+
                 // if the average null
                 // add the previous attributes
                 // but update the ranges and time
@@ -271,6 +275,9 @@ $(document).ready(function(){
         var lastOrder = results[results.length - 1];
 
         for (var i = lastOrder.x.getTime(); i < Date.now(); i += interval ) {
+
+            console.log('looping');
+
             results.push(duplicateObject(lastOrder, {
                     x: new Date(i + interval),
                     startRange: i + (interval / 2),
@@ -278,11 +285,11 @@ $(document).ready(function(){
             }));
         }
 
-        // SHOW RANGES
-        results.forEach(
-            order => console.log('startRange: ', order.startRange,
-                                 'endRange:', order.endRange,
-                                 'difference: ', order.endRange - order.startRange));
+        // // SHOW RANGES
+        // results.forEach(
+        //     order => console.log('startRange: ', order.startRange,
+        //                          'endRange:', order.endRange,
+        //                          'difference: ', order.endRange - order.startRange));
         // results = addPresentPoint(results, interval)
 
 
@@ -306,7 +313,7 @@ $(document).ready(function(){
 
             currentData.index = index;
             currentData.dataPoint = dataPoint;
-            currentData.data = normaliseData(data, 100000);
+            currentData.data = normaliseData(data, 500000);
 
             currentData.data.forEach(function(price){
                 chart.datasets[index].addPoint(price.x, price.y);
