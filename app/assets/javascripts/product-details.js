@@ -306,7 +306,7 @@ $(document).ready(function(){
 
             currentData.index = index;
             currentData.dataPoint = dataPoint;
-            currentData.data = normaliseData(data, 1700000);
+            currentData.data = normaliseData(data, 100000);
 
             currentData.data.forEach(function(price){
                 chart.datasets[index].addPoint(price.x, price.y);
