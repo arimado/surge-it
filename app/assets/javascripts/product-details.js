@@ -358,7 +358,12 @@ $(document).ready(function(){
                                 && order.endRange >= currentTime  ) {
                                 console.log('index: ', normIndex, '@@match: ', order.x,
                                             'difference: ', order.endRange - order.startRange);
-                                    matches.push(normIndex);
+
+                                    matches.push({
+                                        index: normIndex,
+                                        data: newData,
+                                    });
+
 
                             }
                         })
@@ -367,6 +372,16 @@ $(document).ready(function(){
                 });
 
                 console.log('matches: ', matches);
+
+                matches.forEach(function (match) {
+                    // update the correct dataset
+                    // would that be data points?
+
+                    // update the currentData state
+                    // then use that reference to that datastate to change the graph
+
+
+                })
 
                 console.log('----- end datapoint (', dataPoint, ') --------')
             });
