@@ -26,7 +26,7 @@ s.every '5s' do
         puts 'before price: '
         puts product.price;
         puts '----------------'
-
+        
         if (product.price >= product.price_base + reduce_factor) then
             product.update( {:price => product.price - reduce_factor} );
         end
