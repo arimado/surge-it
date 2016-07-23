@@ -258,7 +258,7 @@ $(document).ready(function(){
                 // but update the ranges and time
 
                 // console.log('duping');
-
+                
                 prevAverage = duplicateObject( prevAverage, {
                     x: new Date(currentDatePoint),
                     startRange: currentDatePoint - (interval / 2),
