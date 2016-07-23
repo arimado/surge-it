@@ -258,7 +258,7 @@ $(document).ready(function(){
                 // but update the ranges and time
 
                 // console.log('duping');
-                
+
                 prevAverage = duplicateObject( prevAverage, {
                     x: new Date(currentDatePoint),
                     startRange: currentDatePoint - (interval / 2),
@@ -549,13 +549,18 @@ $(document).ready(function(){
                   success: function(newState) {
                         var newData = findNewData(currentState, newState);
                         // setNewDataOnChart(newData, myDateLineChart, 'price');
-
-
                         updateDataOnChart(newData, currentNormalisedState, myDateLineChart, 'price');
+
+                        // IF NEW ORDERS
                         if (newData.length > 0) {
                             updateOrderDash(currentState, newState);
                             currentState = newState;
                             // update orders
+                        } else {
+                        // IF NO NEW ORDERS
+                            // checkCurrentProductPrice
+                            
+
                         }
                         orderPoll();
                   },
