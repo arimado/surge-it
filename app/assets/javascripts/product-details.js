@@ -408,6 +408,8 @@ $(document).ready(function(){
                     // look for updated data that is beyond the current time range
                     if (currentTime > lastDataObjectOnChart.endRange) {
                         console.log('new data is beyond scope of current data');
+                        console.log('currentlyAddingTo')
+                        matchesNew.push(data);
                     }
 
 
@@ -419,7 +421,6 @@ $(document).ready(function(){
 
 
                 if (matchesExisting.length > 0 ) {
-
                     matchesExisting.forEach(function (match) {
 
                         console.log('dataset to change: ',chart.datasets[0].points[match.index]);
@@ -431,8 +432,14 @@ $(document).ready(function(){
                         chart.datasets[0].points[match.index].valueLabel = '$' + value;
                     })
 
-                } else {
-                    console.log('no matchesExisting found')
+                }
+
+                if (matchesNew.length > 0) {
+
+                    // normalise the data here
+
+
+
                 }
 
 
