@@ -113,9 +113,7 @@ $(document).ready(function(){
         backgroundColor: "rgba(151,187,205,1)",
         fill: true
     }
-
-
-
+    
     var ctx = document.getElementById("productChart").getContext("2d");
     myDateLineChart = new Chart(ctx).Scatter(chartData, options);
     // myDateLineChart = new Chart(ctx).Line(startingData, {animationSteps: 15});
