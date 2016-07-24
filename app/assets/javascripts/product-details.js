@@ -3,6 +3,7 @@ console.log('loaded: product-details.js');
 var myDateLineChart;
 var currentState = {};
 var currentNormalisedState = [];
+var normaliseInterval = 54000;
 
 var updatePointOnChart = function(chart, index, value) {
     // chart.datasets[index].
@@ -113,7 +114,7 @@ $(document).ready(function(){
         backgroundColor: "rgba(151,187,205,1)",
         fill: true
     }
-    
+
     var ctx = document.getElementById("productChart").getContext("2d");
     myDateLineChart = new Chart(ctx).Scatter(chartData, options);
     // myDateLineChart = new Chart(ctx).Line(startingData, {animationSteps: 15});
@@ -214,6 +215,7 @@ $(document).ready(function(){
     // normaliseData()
     // returns an array of data
     // each element represent a range of data within the current interval
+    // each dataObject requires a created_at property
 
     var normaliseData = function (data, interval) {
 
@@ -321,7 +323,7 @@ $(document).ready(function(){
 
             currentData.index = index;
             currentData.dataPoint = dataPoint;
-            currentData.data = normaliseData(data, 54000);
+            currentData.data = normaliseData(data, normaliseInterval);
 
             currentData.data.forEach(function(price){
                 chart.datasets[index].addPoint(price.x, price.y);
@@ -342,6 +344,9 @@ $(document).ready(function(){
         return newValues;
     }
 
+    // updateDataOnChart()
+    // updateDataOnChart(newData, currentNormalisedState, myDateLineChart, 'price');
+
     var updateDataOnChart = function (newData, normalisedData, chart) {
         if (newData.length > 0) {
 
@@ -350,30 +355,49 @@ $(document).ready(function(){
             var dataPoints = args.slice(3, args.length);
 
 
+            var lastDataObjectOnChart = normalisedData[0].data[normalisedData[0].data.length - 1];
+
+
             dataPoints.forEach(function(dataPoint, index) {
 
                 console.log('----- start datapoint (', dataPoint, ') --------')
 
-                var matches = [];
+                var matchesExisting = [];
+                var matchesNew = [];
+
+                // newData.forEach()
+                // finds the data that is within any of the current time ranges and updates that
+                // but if it is beyond the time range it should add new data
 
                 newData.forEach(function (data) {
+
                     console.log('current new data ', data)
                     console.log('time: ', new Date(data.created_at));
+
                     // find out if it is wiithin range
                     // loop through
+
                     var currentTime = new Date(data.created_at).getTime();
 
+
+                    // Look for updated data that is within current time ranges:
+
                     normalisedData.forEach(function (normalData) {
+                        // if the new data does not belong do not show it on the chart
                         if (normalData.dataPoint !== dataPoint) return;
+
+
                         console.log('normalisedData length: ', normalData.data.length);
+
                         normalData.data.forEach(function(order, normIndex) {
 
                             if ( currentTime >= order.startRange
-                                && order.endRange >= currentTime  ) {
+                                && order.endRange >= currentTime ) {
+
                                 console.log('index: ', normIndex, '@@match: ', order.x,
                                             'difference: ', order.endRange - order.startRange);
 
-                                    matches.push({
+                                    matchesExisting.push({
                                         index: normIndex,
                                         data: data,
                                     });
@@ -381,32 +405,41 @@ $(document).ready(function(){
                         })
                     })
 
+                    // look for updated data that is beyond the current time range
+                    if (currentTime > lastDataObjectOnChart.endRange) {
+                        console.log('new data is beyond scope of current data');
+                    }
+
+
                 });
 
-                console.log('matches: ', matches);
 
-                matches.forEach(function (match) {
 
-                    // update the correct dataset
-                    // would that be data points?
+                console.log('matchesExisting: ', matchesExisting);
 
-                    // update the currentData state
-                    // then use that reference to that datastate to change the graph
 
-                    // update the point at index match.index
-                    // with match.data
+                if (matchesExisting.length > 0 ) {
 
-                    console.log('dataset to change: ',chart.datasets[0].points[match.index]);
-                    console.log('with: ', match.data);
-                    var value = parseInt(match.data.price);
+                    matchesExisting.forEach(function (match) {
 
-                    // instead of just updating that value, update all next ones too?
-                    chart.datasets[0].points[match.index].value = value;
-                    chart.datasets[0].points[match.index].valueLabel = '$' + value;
-                })
+                        console.log('dataset to change: ',chart.datasets[0].points[match.index]);
+                        console.log('with: ', match.data);
+                        var value = parseInt(match.data.price);
+
+                        // instead of just updating that value, update all next ones too?
+                        chart.datasets[0].points[match.index].value = value;
+                        chart.datasets[0].points[match.index].valueLabel = '$' + value;
+                    })
+
+                } else {
+                    console.log('no matchesExisting found')
+                }
+
+
 
                 console.log('----- end datapoint (', dataPoint, ') --------')
             });
+
             chart.update();
             return newData;
         } else {
@@ -539,7 +572,9 @@ $(document).ready(function(){
 
     }
 
-    // Polling functions
+    // -------------------------------------------------------------------------
+    // POLLING FUNCTIONS -------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     var orderPoll = function() {
         setTimeout(function() {
@@ -560,7 +595,6 @@ $(document).ready(function(){
                         } else {
                         // IF NO NEW ORDERS
                             // checkCurrentProductPrice
-
 
                         }
                         orderPoll();
@@ -626,10 +660,12 @@ $(document).ready(function(){
           dataType: 'json',
           cache: false,
           success: function(data) {
-             currentNormalisedState = setInitialDataOnChart(data, myDateLineChart, 'price');
-             updateOrderDash(data, data);
-             myDateLineChart.update();
-             currentState = data;
+             if (data.length > 0) {
+                 currentNormalisedState = setInitialDataOnChart(data, myDateLineChart, 'price');
+                 updateOrderDash(data, data);
+                 myDateLineChart.update();
+                 currentState = data;
+             }
           },
           error: function(xhr, status, err) {
           }
