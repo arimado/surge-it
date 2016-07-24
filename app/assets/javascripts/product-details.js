@@ -323,7 +323,7 @@ $(document).ready(function(){
 
             currentData.index = index;
             currentData.dataPoint = dataPoint;
-            currentData.data = normaliseData(data, 500000);
+            currentData.data = normaliseData(data, 54000);
 
             currentData.data.forEach(function(price){
                 chart.datasets[index].addPoint(price.x, price.y);
@@ -559,7 +559,7 @@ $(document).ready(function(){
                         } else {
                         // IF NO NEW ORDERS
                             // checkCurrentProductPrice
-                            
+
 
                         }
                         orderPoll();

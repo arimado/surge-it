@@ -25,8 +25,8 @@ class OrdersController < ApplicationController
 
     surge_algorithim = 10
 
-    product_price_old = product.price
     product_price_new = product.price + surge_algorithim
+    product_price_old = product.price
 
     revenue_total_new = product.revenue + product_price_old
     revenue_surge_new = product.revenue_surge + surge_algorithim
