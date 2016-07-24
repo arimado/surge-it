@@ -486,7 +486,10 @@ $(document).ready(function(){
             );
     }
 
-    var updateOrderDash = function(previousState, newState) {
+    var updateOrderDash = function(previousStateParam, newStateParam) {
+
+        var previousState = _.filter(previousStateParam, {system_order: null});
+        var newState = _.filter(newStateParam, {system_order: null});
 
         var thisTimeLastWeek = new Date().getTime() - (7 * 24 * 60 * 60 * 1000);
         var thisTimeYesterday = new Date().getTime() - (24 * 60 * 60 * 1000);

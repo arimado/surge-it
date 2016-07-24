@@ -67,6 +67,11 @@ class OrdersController < ApplicationController
       render json: Order.where(:product_id => params[:id])
     end
 
+    def api_orders_with_system_orders
+        params[:id]
+        render json: Order.where(:product_id => params[:id], :system_order => nil)
+    end
+
     private
 
 end

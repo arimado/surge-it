@@ -10,7 +10,7 @@ s = Rufus::Scheduler.singleton
 
 # Stupid recurrent task...
 #
-s.every '5s' do
+s.every '1s' do
     # Reduce all product prices by a thing
 
     products = Product.all

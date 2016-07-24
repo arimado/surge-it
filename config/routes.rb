@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
     get 'api/products/:id' => 'products#api_product'
     get 'api/products/:id/orders' => 'orders#api_orders'
+    get 'api/products/:id/orders/system_order' => 'orders#api_orders_with_system_orders'
     post 'api/products/:id/orders/create' => 'orders#api_create_order'
 
     # post 'orders' => 'products#api_orders', :as => 'orders_path_url'
@@ -20,7 +21,7 @@ Rails.application.routes.draw do
     # get 'order/new'
     #
     # get 'order/create'
-    
+
     # get 'products/new'
     #
     # get 'products/index'
