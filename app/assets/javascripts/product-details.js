@@ -3,7 +3,7 @@ console.log('loaded: product-details.js');
 var myDateLineChart;
 var currentState = {};
 var currentNormalisedState = [];
-var normaliseInterval = 54000;
+var normaliseInterval = 24000;
 
 var updatePointOnChart = function(chart, index, value) {
     // chart.datasets[index].
@@ -223,57 +223,71 @@ $(document).ready(function(){
 
         var results = [];
 
-        var start =  new Date(data[0].created_at).getTime();
-        var end = new Date(data[data.length - 1].created_at).getTime()
-        var range = end - start;
-        var startRange;
-        var prevAverage = null;
+        if (data.length === 1) {
+            results.push({
+                x: new Date(data[0].created_at),
+                y: data[0].price,
+                startRange: new Date(data[0].created_at).getTime() - (interval / 2),
+                endRange: new Date(data[0].created_at).getTime() + (interval / 2),
+            })
 
-        // loop
-        // this will loop through each interval and create a average for all
-        // the orders in that inerval
+        } else {
 
-        for ( var i = start; i < end; i += interval) {
+            var start =  new Date(data[0].created_at).getTime();
+            var end = new Date(data[data.length - 1].created_at).getTime()
+            var range = end - start;
+            var startRange;
+            var prevAverage = null;
 
-            console.log('looping');
+            // loop
+            // this will loop through each interval and create a average for all
+            // the orders in that inerval
+
+            for ( var i = start; i < end; i += interval) {
+
+                console.log('looping');
 
 
-            var currentDatePoint = i - (interval / 2);
-            // GET START RANGE
+                var currentDatePoint = i - (interval / 2);
+                // GET START RANGE
 
-            // gets start range
-            if (i >= interval * 2) {
-                startRange = i - interval;
-            } else {
-                startRange = 0;
+                // gets start range
+                if (i >= interval * 2) {
+                    startRange = i - interval;
+                } else {
+                    startRange = 0;
+                }
+
+                var currentDataInRange = getDataInRange(data, startRange, i);
+                var average = getHighestInRange(currentDataInRange, interval, currentDatePoint);
+
+                console.log('average: ', average);
+
+                if ( average === null ){
+
+                    // if the average null
+                    // add the previous attributes
+                    // but update the ranges and time
+
+                    // console.log('duping');
+                    prevAverage = duplicateObject( prevAverage, {
+                        x: new Date(currentDatePoint),
+                        startRange: currentDatePoint - (interval / 2),
+                        endRange: currentDatePoint + (interval / 2),
+                    });
+
+                    average = prevAverage;
+                }
+
+                var currentDifference = average.endRange - average.startRange;
+
+                //  console.log('currentDifference: ', currentDifference)
+
+                results.push(average);
+                prevAverage = duplicateObject(average);
             }
 
-            var currentDataInRange = getDataInRange(data, startRange, i);
-            var average = getHighestInRange(currentDataInRange, interval, currentDatePoint);
-
-            if ( average === null ){
-
-                // if the average null
-                // add the previous attributes
-                // but update the ranges and time
-
-                // console.log('duping');
-
-                prevAverage = duplicateObject( prevAverage, {
-                    x: new Date(currentDatePoint),
-                    startRange: currentDatePoint - (interval / 2),
-                    endRange: currentDatePoint + (interval / 2),
-                });
-
-                average = prevAverage;
-            }
-
-            var currentDifference = average.endRange - average.startRange;
-
-            //  console.log('currentDifference: ', currentDifference)
-
-            results.push(average);
-            prevAverage = duplicateObject(average);
+            console.log('results: ', results)
         }
 
         // add present loop
@@ -408,7 +422,7 @@ $(document).ready(function(){
                     // look for updated data that is beyond the current time range
                     if (currentTime > lastDataObjectOnChart.endRange) {
                         console.log('new data is beyond scope of current data');
-                        console.log('currentlyAddingTo')
+                        console.log('currently adding to matches new')
                         matchesNew.push(data);
                     }
 
@@ -435,9 +449,12 @@ $(document).ready(function(){
                 }
 
                 if (matchesNew.length > 0) {
-
+                    console.log(normaliseData)
+                    console.log('new matches found ------------------- ')
+                    var normalisedNewData = normaliseData(matchesNew, normaliseInterval)
+                    setNewDataOnChart(normalisedNewData, myDateLineChart, 'price');
                     // normalise the data here
-
+                    debugger;
 
 
                 }
@@ -453,7 +470,6 @@ $(document).ready(function(){
             return currentState;
         }
 
-
     }
 
     var setNewDataOnChart = function(newData, chart /* , [followed by datapoint stirngs] */) {
@@ -462,12 +478,15 @@ $(document).ready(function(){
             // store string params in dataPoints
             var args = Array.prototype.slice.call(arguments);
             var dataPoints = args.slice(2, args.length);
-            dataPoints.forEach(function(dataPoint, index) {
-                    mapDatesAndPrices(newData, dataPoint).forEach(function(price){
+            dataPoints.forEach(function(dataPoint, index) {        
+                newData.forEach(function(price) {
                     chart.datasets[index].addPoint(price.x, price.y);
                 });
             });
             chart.update();
+
+
+
             return newData;
         } else {
             return currentState;
