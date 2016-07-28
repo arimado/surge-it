@@ -223,6 +223,10 @@ $(document).ready(function(){
 
         var results = [];
 
+        // if there is only a point of data than create the correct data for the
+        // normalise function to handle it. Because normalise data needs more
+        // than one piece of data to work with
+
         if (data.length === 1) {
             results.push({
                 x: new Date(data[0].created_at),
@@ -454,9 +458,7 @@ $(document).ready(function(){
                     var normalisedNewData = normaliseData(matchesNew, normaliseInterval)
                     setNewDataOnChart(normalisedNewData, myDateLineChart, 'price');
                     // normalise the data here
-                    debugger;
-
-
+                    // debugger;
                 }
 
 
@@ -478,15 +480,13 @@ $(document).ready(function(){
             // store string params in dataPoints
             var args = Array.prototype.slice.call(arguments);
             var dataPoints = args.slice(2, args.length);
-            dataPoints.forEach(function(dataPoint, index) {       
+            dataPoints.forEach(function(dataPoint, index) {
                 newData.forEach(function(price) {
+                    // add it at consisentent intervals right
                     chart.datasets[index].addPoint(price.x, price.y);
                 });
             });
             chart.update();
-
-
-
             return newData;
         } else {
             return currentState;
