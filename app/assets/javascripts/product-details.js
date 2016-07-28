@@ -478,7 +478,7 @@ $(document).ready(function(){
             // store string params in dataPoints
             var args = Array.prototype.slice.call(arguments);
             var dataPoints = args.slice(2, args.length);
-            dataPoints.forEach(function(dataPoint, index) {        
+            dataPoints.forEach(function(dataPoint, index) {       
                 newData.forEach(function(price) {
                     chart.datasets[index].addPoint(price.x, price.y);
                 });
